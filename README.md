@@ -61,3 +61,9 @@ Sources:
 *	https://www.youtube.com/watch?v=nGSNULpHHZc
 *	https://docs.docker.com/network/overlay/
 *	https://docs.docker.com/registry/
+
+Or execute QEMU directly with the following
+
+```
+qemu-system-x86_64 path/to/disk -enable-kvm -m 4096
+```
