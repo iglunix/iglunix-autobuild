@@ -1,0 +1,60 @@
+#!/bin/bash
+
+
+#-----
+# Packages
+#-----
+
+echo "------------------"
+echo "Primary packages"
+echo "------------------"
+
+packages=(mksh bmake gmake busybox toybox libressl cmake curl rsync linux flex byacc om4 zlib expat samurai libffi python ca-certificates)
+root=$(pwd)/root/
+
+for pkg in ${packages[@]};do
+	echo "$pkg"
+	source ${root}/lazybox/pkgs/${pkg}/build.sh
+	cd ${root}/lazybox/pkgs/${pkg}/
+	#Only needed if you want to clean
+	#sudo rm -rf src
+	if test -d "src"; then
+		echo "Already got the source for ${pkg}?! No need to download.."
+	else
+		rm src 2> /dev/null
+		#src could be a file (file != dir)
+		
+		mkdir src
+		cd src
+		fetch
+	fi
+done
+
+
+#-----
+# tmp Packages
+#-----
+
+echo "------------------"
+echo "Temporary packages"
+echo "------------------"
+mkdir ${root}/lazybox/tmp_pkgs/
+
+#echo "ibara baseutils"
+#cd ${root}/lazybox/tmp_pkgs/
+#git clone https://github.com/ibara/baseutils.git
+
+echo "------------------------------------"
+echo "    shell scripts/single files"
+echo "------------------------------------"
+
+cp ${root}/../dont_use_here/inside_chroot ${root}
+cp ${root}/../dont_use_here/linux_header_only_patch ${root}
+cp ${root}/../dont_use_here/inittab ${root}/etc/inittab 
+echo "---------------------"
+echo "finished chroot_fetch"
+echo "---------------------"
+
+
+
+

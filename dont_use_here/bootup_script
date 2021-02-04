@@ -1,0 +1,16 @@
+#! /bin/sh
+
+trap "exit" SIGINT SIGTERM
+
+#No need to keep that file around.
+rm init_custom_container
+
+export DISTCC_CMDLIST="/distccd_cmd_list"
+distccd --daemon --allow 10.0.1.0 --stats -j20 --job-lifetime 10000 -N 0
+#distccd --daemon --allow 10.0.1.79 --stats -j20 --job-lifetime 10000 -N 0 --listen 10.0.1.80
+#distccd --daemon --allow 10.0.1.56 --stats --listen 10.0.1.57 --no-fork --no-detach --log-stderr
+
+# Your compiles may take at most a day... 
+# TODO: fix?
+sleep 1d
+

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd    ./root
+
+echo "Going to chroot, woot!"
+
+mkdir proc
+mkdir sys
+mkdir dev
+mkdir tmp
+
+if true
+then
+	sudo mount --bind /tmp   tmp/
+	sudo mount -t proc /proc proc/
+	sudo mount -t sysfs /sys sys/
+	sudo mount --rbind /dev  dev/
+fi
+
+
+sudo chroot ./ /bin/sh
+
+sudo umount root/tmp/
+sudo umount root/proc/
+sudo umount root/sys/
+sudo mount --make-rprivate root/dev/
+sudo umount -l root/dev/

@@ -1,0 +1,24 @@
+#! /bin/sh
+
+
+# TCP port 2377 for cluster management communications
+# TCP and UDP port 7946 for communication among nodes
+# UDP port 4789 for overlay network traffic
+#
+# See https://docs.docker.com/network/overlay/
+
+sudo iptables -I INPUT 1 -p tcp --dport 2377 -j ACCEPT
+sudo iptables -I OUTPUT 1 -p tcp --dport 2377 -j ACCEPT
+
+sudo iptables -I INPUT 1 -p tcp --dport 7946 -j ACCEPT
+sudo iptables -I OUTPUT 1 -p tcp --dport 7946 -j ACCEPT
+
+sudo iptables -I INPUT 1 -p udp --dport 7946 -j ACCEPT
+sudo iptables -I OUTPUT 1 -p udp --dport 7946 -j ACCEPT
+
+sudo iptables -I INPUT 1 -p udp --dport 4789 -j ACCEPT
+sudo iptables -I OUTPUT 1 -p udp --dport 4789 -j ACCEPT
+
+
+
+

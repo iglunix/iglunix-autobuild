@@ -1,0 +1,100 @@
+Going to build: om4
+stat: 'out': No such file or directory
+checking for C compiler... clang
+checking for -w compiler flag... yes
+checking for OS... Linux
+checking for __dead... no
+checking for __dead2... no
+checking for __attribute__((__noreturn__))... yes
+checking for ohash_init... no
+checking for pledge... no
+checking for reallocarray... yes
+checking for strlcpy... yes
+checking for strtonum... no
+creating Makefile... done
+--- parser.c ---
+--- eval.o ---
+--- expr.o ---
+--- look.o ---
+--- main.o ---
+--- misc.o ---
+--- gnum4.o ---
+--- trace.o ---
+--- parser.h ---
+--- ohash.o ---
+--- reallocarray.o ---
+--- strlcpy.o ---
+--- strtonum.o ---
+--- parser.c ---
+yacc -d parser.y && mv y.tab.c parser.c && mv y.tab.h parser.h
+--- eval.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c eval.c
+--- expr.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c expr.c
+--- look.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c look.c
+--- main.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c main.c
+--- misc.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c misc.c
+--- gnum4.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c gnum4.c
+--- trace.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c trace.c
+--- parser.h ---
+yacc -d parser.y && mv y.tab.c parser.c && mv y.tab.h parser.h
+--- ohash.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c ohash.c
+--- reallocarray.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c reallocarray.c
+--- strlcpy.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c strlcpy.c
+--- strtonum.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c strtonum.c
+--- tokenizer.o ---
+lex  tokenizer.l
+lex go brr
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c -o tokenizer.o lex.yy.c
+--- parser.c ---
+mv: bad 'y.tab.c': No such file or directory
+*** [parser.c] Error code 1
+
+make: stopped in /lazybox/pkgs/om4/src/om4-6.7
+--- tokenizer.o ---
+rm -f lex.yy.c
+1 error
+
+make: stopped in /lazybox/pkgs/om4/src/om4-6.7
+install: can't stat 'om4': No such file or directory
+doc
+Premature exit
+# cd lazybox/pkgs/om4/                                                                                                                                                                                                                      
+# ../../laz
+lazy.sh     lazypkg.sh
+# ../../lazypkg.sh                                                                                                                                                                                                                          
+checking for C compiler... clang
+checking for -w compiler flag... yes
+checking for OS... Linux
+checking for __dead... no
+checking for __dead2... no
+checking for __attribute__((__noreturn__))... yes
+checking for ohash_init... no
+checking for pledge... no
+checking for reallocarray... yes
+checking for strlcpy... yes
+checking for strtonum... no
+creating Makefile... done
+--- parser.o ---
+clang -DEXTENDED -I. -w -D_GNU_SOURCE  -c parser.c
+--- om4 ---
+clang  -o om4 eval.o expr.o look.o main.o misc.o gnum4.o trace.o tokenizer.o  parser.o ohash.o reallocarray.o strlcpy.o strtonum.o -lm
+doc
+# ls out/om                                                                                                                                                                                                                                 
+om4-doc.6.7.tar.xz   om4-doc/             om4.6.7.tar.xz       om4/
+# ls out/om4/usr/bin/                                                                                                                                                                                                                       
+m4   om4
+# ls out/om4/usr/bin/om4                                                                                                                                                                                                                    
+out/om4/usr/bin/om4
+# out/om4/usr/bin/om4                                                                                                                                                                                                                       
+^Cm4: interrupted.
+#                   

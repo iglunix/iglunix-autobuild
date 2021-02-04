@@ -1,0 +1,11 @@
+FROM abyssos/abyss:dev
+
+COPY dont_use_here/init_custom_container /init_custom_container
+COPY dont_use_here/bootup_script         /bootup_script
+COPY dont_use_here/distccd_cmd_list      /distccd_cmd_list
+COPY dont_use_here/compile               /compile
+
+CMD ["sh", "init_custom_container"]
+
+
+

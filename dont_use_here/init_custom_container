@@ -1,0 +1,9 @@
+#! /bin/sh
+
+echo Intitiating container upgrade
+
+apk update  &&
+apk upgrade &&
+apk add distcc samurai cmake python3
+
+

@@ -1,0 +1,130 @@
+#! /bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "You must enter exactly the container id of the docker in which the compilation took place. (the client not the volunteers)"
+    exit -1
+fi
+
+#Unmount the mounts
+sudo umount root/tmp/
+sudo umount root/proc/
+sudo umount root/sys/
+sudo mount --make-rprivate root/dev/
+sudo umount -l root/dev/
+
+#Delete everything!
+#umout has problems :(
+# Just delete a couple of this ot clean it..
+#sudo rm -r -f ./root
+
+if true; then
+	sudo rm -rf ./root/lib
+	sudo rm -rf ./root/bin
+	sudo rm -rf ./root/sbin
+	sudo rm -rf ./root/usr
+	sudo rm -rf ./root/lazybox
+	sudo rm -rf ./root/etc
+fi
+
+mkdir root
+mkdir root/bin
+mkdir root/sbin
+mkdir root/usr
+mkdir root/usr/sbin
+mkdir root/etc
+
+docker cp $1:/lazybox/pkgs/llvm/out/llvm.11.0.1.tar.xz     ./root/llvm.tar.xz
+docker cp $1:/lazybox/pkgs/musl/out/musl-dev.1.2.2.tar.xz  ./root/musl-dev.tar.xz
+docker cp $1:/lazybox/pkgs/musl/out/musl.1.2.2.tar.xz      ./root/musl.tar.xz
+docker cp $1:/lazybox/pkgs/bmake/out/bmake.20210110.tar.xz ./root/bmake.tar.xz
+
+cd    ./root
+ROOT=$(pwd)
+
+tar -xf musl.tar.xz      -C ./
+tar -xf musl-dev.tar.xz  -C ./
+tar -xf llvm.tar.xz      -C ./
+tar -xf bmake.tar.xz     -C ./
+
+#---
+wget -nc -q https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64
+chmod +x ./busybox-x86_64
+mv busybox-x86_64 ./bin/busybox
+
+wget -nc -q http://landley.net/toybox/bin/toybox-x86_64
+chmod +x ./toybox-x86_64
+mv toybox-x86_64 ./bin/toybox
+
+echo ""
+#---
+
+git clone https://github.com/Ella-0/lazybox.git
+
+#----
+
+# Mount some things, we'll need it later
+mkdir proc
+mkdir sys
+mkdir dev
+mkdir tmp
+
+if false
+then
+	sudo mount --bind /tmp   tmp/
+	sudo mount -t proc /proc proc/
+	sudo mount -t sysfs /sys sys/
+	sudo mount --rbind /dev  dev/
+fi
+
+echo "mounted tmp, proc, sysfs, rbind"
+
+# We'll need to compile mksh
+# But we don't have tools to get the sources from inside the chroot yet..
+cd ..
+echo "Starting chroot_fetch"
+./chroot_fetch
+
+
+echo "Need to compile a lex file in om4, because of a circular dependency with flex"
+#For the other attempt at fixing this circular dependency see inside_chroot
+cd ${ROOT}/lazybox/pkgs/om4/src/om4-*/
+lex ./tokenizer.l
+
+sudo chroot ${ROOT} /bin/busybox --install -s
+echo "installed busybox"
+
+
+printf "export PATH=/bin:/usr/bin:/usr/sbin:\nexport JOBS=16\n" > ${ROOT}/etc/lazypkg.conf
+
+#--------------------------------------
+echo "---------------------------------"
+echo "Starting networking configuration"
+echo "---------------------------------"
+
+RANDOM=$$
+HOSTNAME="lazybox-$RANDOM"
+echo "Hostname: ${HOSTNAME}"
+mkdir ${ROOT}/etc
+echo "$HOSTNAME" > ${ROOT}/etc/hostname
+
+sudo cp /etc/resolv.conf ${ROOT}/etc/resolv.conf
+echo "Copied the host resolv.conf into the target"
+echo "Feel free to override the generated network settings prior to chrooting into the system"
+
+echo "Finished prepare_chroot_lazy"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

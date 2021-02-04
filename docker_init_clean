@@ -1,0 +1,41 @@
+#! /bin/sh
+
+
+#Stop & remove all the old
+docker service rm my_compile_farm  || true
+docker image rm local:lazy_abyss   || true
+rm image_name                      || true
+rm lazy_abyss.tar                  || true
+echo "Cleaned and ready for the first/next attempt!"
+
+#Create new modified container
+docker build . --iidfile image_name --file Dockerfile_update
+image_name="`cat image_name`" #This is an intermidiary image
+
+echo "docker run starting, this may take a while"
+
+docker run --name updated_abyss ${image_name} 
+
+echo "docker run finished"
+
+if false
+then 
+	docker run -d -p 5000:5000 --name my_registry registry:2
+	echo "Created my_registry"
+	docker commit updated_abyss localhost:5000/lazy_abyss
+	echo "Created localhost:5000:lazy_abyss"
+	docker push localhost:5000/lazy_abyss
+	echo "pushed localhost:5000:lazy_abyss"
+else 
+	docker commit updated_abyss local:lazy_abyss
+	docker save -o ./lazy_abyss.tar local:lazy_abyss
+	echo "Move this tar to all nodes, then \"docker load -i lazy_abyss.tar\""
+	
+fi
+
+#docker image rm ${image_name}
+#echo "Removed intermidiary ${image_name}"
+
+
+
+

@@ -1,0 +1,36 @@
+#! /bin/sh
+
+export PATH="/usr/lib/distcc/bin:$PATH"
+export DISTCC_HOSTS="localhost 10.0.1.57/10"
+export DISTCC_CMDLIST="/distccd_cmd_list"
+
+git clone https://github.com/Ella-0/lazybox.git
+
+#---
+
+#cd /
+#git clone https://github.com/landley/toybox.git
+#Can't build toybox
+#Need ln -r for llvm :(
+wget http://landley.net/toybox/bin/toybox-x86_64
+chmod +x ./toybox-x86_64
+mv toybox-x86_64 /bin/toybox
+rm /bin/ln
+/bin/toybox ln -s /bin/toybox /bin/ln
+
+#---
+
+cd lazybox/pkgs/llvm
+../../lazypkg.sh
+
+cd ../musl
+../../lazypkg.sh
+
+cd ../mksh
+../../lazypkg.sh
+
+
+
+
+
+

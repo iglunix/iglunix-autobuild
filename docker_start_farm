@@ -1,0 +1,20 @@
+#! /bin/sh
+
+if false
+then 
+For use with a dcoker registry
+docker service create --name my_compile_farm \
+  --network my_docker_overlay_net \
+  --replicas 2\
+  localhost:5000/lazy_abyss /bootup_script
+else
+	docker service create --name my_compile_farm \
+	  --network my_docker_overlay_net \
+	  --replicas 2\
+	  local:lazy_abyss /bootup_script
+fi
+
+
+
+
+

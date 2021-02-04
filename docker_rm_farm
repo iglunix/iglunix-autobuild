@@ -1,0 +1,5 @@
+#! /bin/sh
+
+docker service rm my_compile_farm
+
+
