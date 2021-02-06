@@ -57,13 +57,14 @@ There are 4 commands the user should be aware of, they are writen in chronologic
 
 Use virt-manager or qemu to boot the `lazybox.img`.
 
-Sources:
-*	https://www.youtube.com/watch?v=nGSNULpHHZc
-*	https://docs.docker.com/network/overlay/
-*	https://docs.docker.com/registry/
-
 Or execute QEMU directly with the following
 
 ```
 qemu-system-x86_64 path/to/disk -enable-kvm -m 4096
 ```
+
+Sources:
+*	https://www.youtube.com/watch?v=nGSNULpHHZc
+*	https://docs.docker.com/network/overlay/
+*	https://docs.docker.com/registry/
+
