@@ -8,8 +8,8 @@ compile_packages (){
 	for pkg in $n_packages; do
 		echo "Going to build: $pkg"
 	
-		cd /lazybox/pkgs/${pkg}/
-		../../lazypkg.sh
+		cd /iglunix/pkgs/${pkg}/
+		../../iglupkg.sh
 		tar -xf out/${pkg}.*.tar.xz -C /
 		tar -xf out/${pkg}-dev.*.tar.xz -C / 2> /dev/null
 		tar -xf out/${pkg}-doc.*.tar.xz -C / 2> /dev/null
@@ -44,7 +44,7 @@ echo "root:x:0:root" > /etc/group
 # Stage 1
 #---------
 #Apply the only headers patch for linux, we can't build it yet...
-patch /lazybox/pkgs/linux/build.sh /linux_header_only_patch
+patch /iglunix/pkgs/linux/build.sh /linux_header_only_patch
 #Stub lex
 printf "#!/bin/sh\necho lex go brr\n" > /usr/bin/lex
 chmod +x /usr/bin/lex
@@ -64,13 +64,13 @@ compile_packages
 
 
 #Samurai
-cd /lazybox/pkgs/samurai
+cd /iglunix/pkgs/samurai
 cd src/samurai-*/
 clang *.c -o samu
-cp /lazybox/pkgs/samurai/out/samurai/bin/samu /usr/bin
-cd /lazybox/pkgs/samurai
+cp /iglunix/pkgs/samurai/out/samurai/bin/samu /usr/bin
+cd /iglunix/pkgs/samurai
 
-../../lazypkg.sh
+../../iglupkg.sh
 rm /usr/bin/samu
 tar -xf out/samurai.*.tar.xz -C /
 
@@ -85,12 +85,12 @@ compile_packages
 #---------
 # Libre ssl, a slight problem
 # lible ssl needs cmake, but cmake needs libre ssl. :(
-cd /lazybox/pkgs/libressl
+cd /iglunix/pkgs/libressl
 cd src/libressl-*/
 ./configure --prefix=/usr && make -j12 && make install
 cd ../..
 
-cd /lazybox/pkgs/cmake
+cd /iglunix/pkgs/cmake
 cd src/cmake-*/
 ./bootstrap \
         --prefix=/usr \
@@ -106,8 +106,8 @@ cd ../..
 
 #NOTE: we recompile mksh, because now we have curl and it can download the man page!
 #We remove the linux headers only patch
-patch -R /lazybox/pkgs/linux/build.sh /linux_header_only_patch
-packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux lazybox llvm musl tiny-linux-bootloader"
+patch -R /iglunix/pkgs/linux/build.sh /linux_header_only_patch
+packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux iglunix llvm musl tiny-linux-bootloader"
 compile_packages
 
 echo "finished"
@@ -127,13 +127,13 @@ exit
 # om4 and flex have a circular dependency
 # NOTE: THIS DOES NOT WORK 
 #       The lex file in om4 is compiled on the host :(
-#       Solution: see prepare_chroot_lazy
+#       Solution: see prepare_chroot_iglunix
 # PLAN:
 #   build https://github.com/ibara/baseutils lex
 #   build om4
 # b  uild flex
 # rm baseutils lex
-cd /lazybox/tmp_pkgs/baseutils
+cd /iglunix/tmp_pkgs/baseutils
 make -C libopenbsd
 make -C lex
 cp lex /usr/bin

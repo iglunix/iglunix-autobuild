@@ -4,7 +4,7 @@ export PATH="/usr/lib/distcc/bin:$PATH"
 export DISTCC_HOSTS="localhost 10.0.1.57/10"
 export DISTCC_CMDLIST="/distccd_cmd_list"
 
-git clone https://github.com/Ella-0/lazybox.git
+git clone https://github.com/iglunix/iglunix.git
 
 #---
 
@@ -20,14 +20,14 @@ rm /bin/ln
 
 #---
 
-cd lazybox/pkgs/llvm
-../../lazypkg.sh
+cd iglunix/pkgs/llvm
+../../iglupkg.sh
 
 cd ../musl
-../../lazypkg.sh
+../../iglupkg.sh
 
 cd ../mksh
-../../lazypkg.sh
+../../iglupkg.sh
 
 
 

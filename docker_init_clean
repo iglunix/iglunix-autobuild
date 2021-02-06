@@ -3,9 +3,9 @@
 
 #Stop & remove all the old
 docker service rm my_compile_farm  || true
-docker image rm local:lazy_abyss   || true
+docker image rm local:iglunix_abyss   || true
 rm image_name                      || true
-rm lazy_abyss.tar                  || true
+rm iglunix_abyss.tar                  || true
 echo "Cleaned and ready for the first/next attempt!"
 
 #Create new modified container
@@ -22,14 +22,14 @@ if false
 then 
 	docker run -d -p 5000:5000 --name my_registry registry:2
 	echo "Created my_registry"
-	docker commit updated_abyss localhost:5000/lazy_abyss
-	echo "Created localhost:5000:lazy_abyss"
-	docker push localhost:5000/lazy_abyss
-	echo "pushed localhost:5000:lazy_abyss"
+	docker commit updated_abyss localhost:5000/iglunix_abyss
+	echo "Created localhost:5000:iglunix_abyss"
+	docker push localhost:5000/iglunix_abyss
+	echo "pushed localhost:5000:iglunix_abyss"
 else 
-	docker commit updated_abyss local:lazy_abyss
-	docker save -o ./lazy_abyss.tar local:lazy_abyss
-	echo "Move this tar to all nodes, then \"docker load -i lazy_abyss.tar\""
+	docker commit updated_abyss local:iglunix_abyss
+	docker save -o ./iglunix_abyss.tar local:iglunix_abyss
+	echo "Move this tar to all nodes, then \"docker load -i iglunix_abyss.tar\""
 	
 fi
 

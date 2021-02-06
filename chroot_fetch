@@ -14,8 +14,8 @@ root=$(pwd)/root/
 
 for pkg in ${packages[@]};do
 	echo "$pkg"
-	source ${root}/lazybox/pkgs/${pkg}/build.sh
-	cd ${root}/lazybox/pkgs/${pkg}/
+	source ${root}/iglunix/pkgs/${pkg}/build.sh
+	cd ${root}/iglunix/pkgs/${pkg}/
 	#Only needed if you want to clean
 	#sudo rm -rf src
 	if test -d "src"; then
@@ -38,10 +38,10 @@ done
 echo "------------------"
 echo "Temporary packages"
 echo "------------------"
-mkdir ${root}/lazybox/tmp_pkgs/
+mkdir ${root}/iglunix/tmp_pkgs/
 
 #echo "ibara baseutils"
-#cd ${root}/lazybox/tmp_pkgs/
+#cd ${root}/iglunix/tmp_pkgs/
 #git clone https://github.com/ibara/baseutils.git
 
 echo "------------------------------------"

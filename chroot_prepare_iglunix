@@ -22,7 +22,7 @@ if true; then
 	sudo rm -rf ./root/bin
 	sudo rm -rf ./root/sbin
 	sudo rm -rf ./root/usr
-	sudo rm -rf ./root/lazybox
+	sudo rm -rf ./root/iglunix
 	sudo rm -rf ./root/etc
 fi
 
@@ -33,10 +33,10 @@ mkdir root/usr
 mkdir root/usr/sbin
 mkdir root/etc
 
-docker cp $1:/lazybox/pkgs/llvm/out/llvm.11.0.1.tar.xz     ./root/llvm.tar.xz
-docker cp $1:/lazybox/pkgs/musl/out/musl-dev.1.2.2.tar.xz  ./root/musl-dev.tar.xz
-docker cp $1:/lazybox/pkgs/musl/out/musl.1.2.2.tar.xz      ./root/musl.tar.xz
-docker cp $1:/lazybox/pkgs/bmake/out/bmake.20210110.tar.xz ./root/bmake.tar.xz
+docker cp $1:/iglunix/pkgs/llvm/out/llvm.11.0.1.tar.xz     ./root/llvm.tar.xz
+docker cp $1:/iglunix/pkgs/musl/out/musl-dev.1.2.2.tar.xz  ./root/musl-dev.tar.xz
+docker cp $1:/iglunix/pkgs/musl/out/musl.1.2.2.tar.xz      ./root/musl.tar.xz
+docker cp $1:/iglunix/pkgs/bmake/out/bmake.20210110.tar.xz ./root/bmake.tar.xz
 
 cd    ./root
 ROOT=$(pwd)
@@ -58,7 +58,7 @@ mv toybox-x86_64 ./bin/toybox
 echo ""
 #---
 
-git clone https://github.com/Ella-0/lazybox.git
+git clone https://github.com/iglunix/iglunix.git
 
 #----
 
@@ -87,7 +87,7 @@ echo "Starting chroot_fetch"
 
 echo "Need to compile a lex file in om4, because of a circular dependency with flex"
 #For the other attempt at fixing this circular dependency see inside_chroot
-cd ${ROOT}/lazybox/pkgs/om4/src/om4-*/
+cd ${ROOT}/iglunix/pkgs/om4/src/om4-*/
 lex ./tokenizer.l
 
 sudo chroot ${ROOT} /bin/busybox --install -s
@@ -102,7 +102,7 @@ echo "Starting networking configuration"
 echo "---------------------------------"
 
 RANDOM=$$
-HOSTNAME="lazybox-$RANDOM"
+HOSTNAME="iglunix-$RANDOM"
 echo "Hostname: ${HOSTNAME}"
 mkdir ${ROOT}/etc
 echo "$HOSTNAME" > ${ROOT}/etc/hostname
