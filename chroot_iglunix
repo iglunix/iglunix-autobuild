@@ -20,6 +20,8 @@ fi
 
 sudo chroot ./ /bin/sh
 
+cd ..
+
 sudo umount root/tmp/
 sudo umount root/proc/
 sudo umount root/sys/
