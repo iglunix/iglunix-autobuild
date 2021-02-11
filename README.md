@@ -1,7 +1,7 @@
 
-Welcome, this is lazy-autobuild.
-Thu GNU General Public License v3 licesed (mostly) automatic build system for Lazybox.
-Lazybox for the uninitiated is a inux distribution designed to not use _GNU_, sadly this is quit hard. GNU make is still available inside this environment.
+Welcome, this is iglunix-autobuild.
+Thu GNU General Public License v3 licesed (mostly) automatic build system for Iglunix.
+Iglunix for the uninitiated is a inux distribution designed to not use _GNU_, sadly this is quit hard. GNU make is still available inside this environment.
 
 
 
@@ -22,7 +22,7 @@ On the main node run: `docker network create -d overlay my_docker_net`
 The problem is that we can't chain commands when starting a docker service create, so we'll have to modify the base abyssos/abyss:dev docker container. We'll need to dowload packages for the installation, we'll add these to the our modified package.
 This method might also reduce internet usage.
 
-To initialize run ```docker_init_clean```, this will create lazy_abyss.tar, this will have to be manually moved to all docker nodes and then loaded using: ``` docker load -i lazy_abyss.tar```
+To initialize run ```docker_init_clean```, this will create iglunix_abyss.tar, this will have to be manually moved to all docker nodes and then loaded using: ``` docker load -i iglunix_abyss.tar```
 
 To start the distributed compiler `docker_start_farm` can be used. Prior to execution modify `docker_start_farm` to suit the number of jobs you need to run.
 
@@ -39,15 +39,15 @@ It could be useful to leave the compile farm around for the compilation indide t
 This part is significantly less over engineerd (luckily).
 There are 4 commands the user should be aware of, they are writen in chronological order.
 
-* chroot_prepare_lazy
+* chroot_prepare_iglunix
 
-  This creates the chroot and cleans the most important locations (/lib, /bin, /sbin, /usr, /lazybox, /etc).
+  This creates the chroot and cleans the most important locations (/lib, /bin, /sbin, /usr, /iglunix, /etc).
 * chroot_fetch
 
-  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environmen. This command will automatically be execute by `chroot_prepare_lazy`. It it __NOT NEEDED__ to be manually exected. But it can be.
-* chroot_lazy
+  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environmen. This command will automatically be execute by `chroot_prepare_iglunix`. It it __NOT NEEDED__ to be manually exected. But it can be.
+* chroot_iglunix
 
-  This will chroot into the lazybox environment.
+  This will chroot into the Iglunix environment.
 * inside_chroot
 
   This is the script that has to be executed inside the chroot to compile all the required apckages in the correct order.
@@ -55,7 +55,7 @@ There are 4 commands the user should be aware of, they are writen in chronologic
 
 ## Fase 3: Boot
 
-Use virt-manager or qemu to boot the `lazybox.img`.
+Use virt-manager or qemu to boot the `iglunix.img`.
 
 Or execute QEMU directly with the following
 
