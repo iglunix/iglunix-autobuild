@@ -44,7 +44,7 @@ There are 4 commands the user should be aware of, they are writen in chronologic
   This creates the chroot and cleans the most important locations (/lib, /bin, /sbin, /usr, /iglunix, /etc).
 * chroot_fetch
 
-  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environmen. This command will automatically be execute by `chroot_prepare_iglunix`. It it __NOT NEEDED__ to be manually exected. But it can be.
+  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environmen. This command will automatically be execute by `chroot_prepare_iglunix`. It is __NOT NEEDED__ to be manually exected. But it can be.
 * chroot_iglunix
 
   This will chroot into the Iglunix environment.
