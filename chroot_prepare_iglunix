@@ -2,6 +2,8 @@
 
 if [ "$#" -ne 1 ]; then
     echo "You must enter exactly the container id of the docker in which the compilation took place. (the client not the volunteers)"
+    echo "This can be false, then the builds fodler will be used."
+    echo "The builds folder is a folder where llvm, musl, musl-dev, bmake can reside which will can be used instead of the automatic docker cp mechanism."
     exit -1
 fi
 
@@ -38,6 +40,8 @@ docker cp $1:/iglunix/pkgs/musl/out/musl-dev.1.2.2.tar.xz  ./root/musl-dev.tar.x
 docker cp $1:/iglunix/pkgs/musl/out/musl.1.2.2.tar.xz      ./root/musl.tar.xz
 docker cp $1:/iglunix/pkgs/bmake/out/bmake.20210110.tar.xz ./root/bmake.tar.xz
 
+cp ./builds/* ./root/
+
 cd    ./root
 ROOT=$(pwd)
 
@@ -47,10 +51,12 @@ tar -xf llvm.tar.xz      -C ./
 tar -xf bmake.tar.xz     -C ./
 
 #---
+rm ./busybox-x86_64
 wget -nc -q https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64
 chmod +x ./busybox-x86_64
 mv busybox-x86_64 ./bin/busybox
 
+rm ./toybox-x86_64
 wget -nc -q http://landley.net/toybox/bin/toybox-x86_64
 chmod +x ./toybox-x86_64
 mv toybox-x86_64 ./bin/toybox

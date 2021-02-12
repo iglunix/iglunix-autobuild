@@ -9,8 +9,8 @@ compile_packages (){
 		echo "Going to build: $pkg"
 	
 		cd /iglunix/pkgs/${pkg}/
-		../../iglupkg.sh
-		tar -xf out/${pkg}.*.tar.xz -C /
+		../../iglupkg.sh || exit 1
+		tar -xf out/${pkg}.*.tar.xz -C / || exit 1
 		tar -xf out/${pkg}-dev.*.tar.xz -C / 2> /dev/null
 		tar -xf out/${pkg}-doc.*.tar.xz -C / 2> /dev/null
 	done
@@ -43,8 +43,6 @@ echo "root:x:0:root" > /etc/group
 #---------
 # Stage 1
 #---------
-#Apply the only headers patch for linux, we can't build it yet...
-patch /iglunix/pkgs/linux/build.sh /linux_header_only_patch
 #Stub lex
 printf "#!/bin/sh\necho lex go brr\n" > /usr/bin/lex
 chmod +x /usr/bin/lex
@@ -63,7 +61,7 @@ compile_packages
 
 
 
-#Samurai
+#Samurai|| exit 1
 cd /iglunix/pkgs/samurai
 cd src/samurai-*/
 clang *.c -o samu
@@ -74,41 +72,41 @@ cd /iglunix/pkgs/samurai
 rm /usr/bin/samu
 tar -xf out/samurai.*.tar.xz -C /
 
-
-
-packages="rsync linux"
-compile_packages
-
-
-#---------
-# Stage 3
-#---------
 # Libre ssl, a slight problem
 # lible ssl needs cmake, but cmake needs libre ssl. :(
+# and rsync needs cmake
 cd /iglunix/pkgs/libressl
 cd src/libressl-*/
 ./configure --prefix=/usr && make -j12 && make install
-cd ../..
+
+packages="rsync"
+compile_packages
+
+# Build the headers of linux.
+# No other solutions don't work well/at all.
+cd /iglunix/pkgs/linux
+cd src/linux-*/
+gmake CC=cc CXX=c++ HOSTCC=cc HOSTCXX=c++ LEX=lex YACC=yacc LLVM_IAS=1
+gmake CC=cc CXX=c++ HOSTCC=cc HOSTCXX=c++ YACC=yacc LLVM_IAS=1 INSTALL_HDR_PATH=/usr headers_install
+
 
 cd /iglunix/pkgs/cmake
 cd src/cmake-*/
 ./bootstrap \
         --prefix=/usr \
         --mandir=/usr/share/man \
-        --datadir=/usr/share/$pkgname \
-        --docdir=/usr/share/doc/$pkgname \
+        --datadir=/usr/share/cmake \
+        --docdir=/usr/share/doc/cmake \
         --generator=Ninja \
         --no-system-libs
 
 cd ../..
 
 
-
 #NOTE: we recompile mksh, because now we have curl and it can download the man page!
-#We remove the linux headers only patch
-patch -R /iglunix/pkgs/linux/build.sh /linux_header_only_patch
-packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux iglunix llvm musl tiny-linux-bootloader"
+packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux iglunix llvm musl nasm tiny-linux-bootloader"
 compile_packages
+
 
 echo "finished"
 exit
