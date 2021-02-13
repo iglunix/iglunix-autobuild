@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export PATH=$PATH:/bin:/usr/bin:/usr/sbin
+export PATH=$PATH:/usr/sbin:/usr/bin:/sbin:/bin
 
 compile_packages (){
 	#for pkg in ${packages[@]};do
