@@ -104,7 +104,7 @@ cd ../..
 
 
 #NOTE: we recompile mksh, because now we have curl and it can download the man page!
-packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux iglunix llvm musl nasm tiny-linux-bootloader"
+packages="cmake libressl busybox toybox libffi python ca-certificates curl zlib expat kati gettext-tiny git netbsd-curses kakoune mksh linux iglunix llvm musl e2fsprogs nasm tiny-linux-bootloader"
 compile_packages
 
 
