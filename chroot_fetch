@@ -59,7 +59,7 @@ cp ${root}/../dont_use_here/profile ${root}/etc/profile
 
 
 cat << EOF > ${root}/login_shell
-exec -a "-ash" /bin/ash
+exec -a "-sh" /bin/sh
 EOF
 
 echo "---------------------"

@@ -19,7 +19,7 @@ then
 fi
 
 
-sudo chroot ./ /bin/ash login_shell
+sudo chroot ./ /bin/sh login_shell
 
 sudo umount root/tmp/
 sudo umount root/proc/
