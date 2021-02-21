@@ -84,10 +84,12 @@ compile_packages
 
 # Build the headers of linux.
 # No other solutions don't work well/at all.
+# NOTE: we need to clean up after ourselves.
 cd /iglunix/pkgs/linux
 cd src/linux-*/
 gmake CC=cc CXX=c++ HOSTCC=cc HOSTCXX=c++ LEX=lex YACC=yacc LLVM_IAS=1
 gmake CC=cc CXX=c++ HOSTCC=cc HOSTCXX=c++ YACC=yacc LLVM_IAS=1 INSTALL_HDR_PATH=/usr headers_install
+rm -r ./src ./out
 
 
 cd /iglunix/pkgs/cmake
