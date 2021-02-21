@@ -57,10 +57,12 @@ mkdir ${root}/etc/profile.d
 
 cp ${root}/../dont_use_here/profile ${root}/etc/profile
 
+
+cat << EOF > ${root}/login_shell
+exec -a "-ash" /bin/ash
+EOF
+
 echo "---------------------"
 echo "finished chroot_fetch"
 echo "---------------------"
-
-
-
 

@@ -19,24 +19,7 @@ then
 fi
 
 
-if false; then
-sudo chroot ./ /usr/bin/env -i \
-                HOME="/root"   \
-                TERM="$TERM"   \
-                PS1='chroot: '        \
-                PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games" \
-                /bin/bash -l +h
-fi
-if false; then
-sudo chroot ./ /usr/bin/env -i \
-               /bin/bash source /etc/profile\
-               /bin/bash -l +h
-fi
-
-sudo chroot ./ /bin/bash -l
-
-
-cd ..
+sudo chroot ./ /bin/ash login_shell
 
 sudo umount root/tmp/
 sudo umount root/proc/
