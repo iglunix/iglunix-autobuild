@@ -1,6 +1,6 @@
 
 Welcome, this is iglunix-autobuild.
-Thu GNU General Public License v3 lincesed (mostly) automatic build system for Iglunix.
+Thu GNU General Public License v3 licensed (mostly) automatic build system for Iglunix.
 Iglunix for the uninitiated is a linux distribution designed to not use _GNU_, sadly this is quit hard. GNU make is still available inside this environment.
 
 
