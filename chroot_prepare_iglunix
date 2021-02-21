@@ -102,7 +102,14 @@ echo "installed busybox"
 
 printf "export PATH=/bin:/usr/bin:/usr/sbin:\nexport JOBS=16\n" > ${ROOT}/etc/iglupkg.conf
 
-#--------------------------------------
+echo "---------------------------------"
+echo "     Kayboard configuration"
+echo "---------------------------------"
+
+echo "Copying host keymap"
+
+cp /etc/vconsole.conf ${ROOT}/etc/vconsole.conf
+
 echo "---------------------------------"
 echo "Starting networking configuration"
 echo "---------------------------------"

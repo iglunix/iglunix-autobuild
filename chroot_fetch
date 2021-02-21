@@ -50,7 +50,13 @@ echo "------------------------------------"
 
 cp ${root}/../dont_use_here/inside_chroot ${root}
 cp ${root}/../dont_use_here/linux_header_only_patch ${root}
-cp ${root}/../dont_use_here/inittab ${root}/etc/inittab 
+cp ${root}/../dont_use_here/inittab ${root}/etc/inittab
+
+mkdir ${root}/etc
+mkdir ${root}/etc/profile.d
+
+cp ${root}/../dont_use_here/profile ${root}/etc/profile
+
 echo "---------------------"
 echo "finished chroot_fetch"
 echo "---------------------"
