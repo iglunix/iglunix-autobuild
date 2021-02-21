@@ -59,11 +59,13 @@ There are 4 new commands the user should be aware of, they are written in chrono
 
 Use virt-manager or qemu to boot the `iglunix.img`.
 
-Or execute QEMU directly with the following
+Execute QEMU directly with the following command:
 
 ```
 qemu-system-x86_64 path/to/disk -enable-kvm -m 4096
 ```
+
+NOTE: Qemu is broken, we don't know why, use virt-manager.
 
 ## Trivia
 
