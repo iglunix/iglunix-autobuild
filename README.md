@@ -46,7 +46,7 @@ There are 4 new commands the user should be aware of, they are written in chrono
 
 * chroot_fetch
 
-  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environment. This command will automatically be execute by `chroot_prepare_iglunix`. It is __NOT NEEDED__ to be manually executed. But it can be for development purposes.
+  This command will fetch the sources needed to get curl working inside the chroot. And some files for to be used inside the chroot environment. This command will automatically be executed by `chroot_prepare_iglunix`. It is __NOT NEEDED__ to be manually executed. But it can be for development purposes.
 * chroot_iglunix
 
   This will chroot into the Iglunix environment. Once inside run `source /etc/profile` this helps debugging.
