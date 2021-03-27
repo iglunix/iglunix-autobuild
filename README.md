@@ -36,6 +36,8 @@ It could be useful to leave the compile farm around for the compilation indide t
 
 ## Fase 2: Chroot
 
+WARNING: This part makes use of loopback devices, if the kernel was updated but the system not rebooted, reboot.
+
 This part is significantly less over engineered (luckily).
 There are 4 new commands the user should be aware of, they are written in chronological order.
 
