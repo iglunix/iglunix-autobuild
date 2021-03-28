@@ -100,7 +100,7 @@ sudo chroot ${ROOT} /bin/busybox --install -s
 echo "installed busybox"
 
 
-printf "export PATH=/bin:/usr/bin:/usr/sbin:\nexport JOBS=16\n" > ${ROOT}/etc/iglupkg.conf
+printf "export PATH=/usr/sbin:/usr/bin:/sbin:/bin:\nexport JOBS=16\n" > ${ROOT}/etc/iglupkg.conf
 
 echo "---------------------------------"
 echo "     Kayboard configuration"
