@@ -62,6 +62,10 @@ cat << EOF > ${root}/login_shell
 exec -a "-sh" /bin/sh
 EOF
 
+sudo cp /etc/resolv.conf ${ROOT}/etc/resolv.conf
+echo "Copied the host resolv.conf into the target"
+echo "Feel free to override the generated network settings prior to chrooting into the system"
+
 echo "---------------------"
 echo "finished chroot_fetch"
 echo "---------------------"

@@ -112,10 +112,6 @@ echo "Hostname: ${HOSTNAME}"
 mkdir ${ROOT}/etc
 echo "$HOSTNAME" > ${ROOT}/etc/hostname
 
-sudo cp /etc/resolv.conf ${ROOT}/etc/resolv.conf
-echo "Copied the host resolv.conf into the target"
-echo "Feel free to override the generated network settings prior to chrooting into the system"
-
 echo "Finished prepare_chroot_lazy"
 
 
