@@ -74,14 +74,6 @@ mkdir sys
 mkdir dev
 mkdir tmp
 
-if false
-then
-	sudo mount --bind /tmp   tmp/
-	sudo mount -t proc /proc proc/
-	sudo mount -t sysfs /sys sys/
-	sudo mount --rbind /dev  dev/
-fi
-
 echo "mounted tmp, proc, sysfs, rbind"
 
 # We'll need to compile mksh
