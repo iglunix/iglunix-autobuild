@@ -17,7 +17,7 @@ Make your main pc/laptop the manager of the swarm using:
 
 It will return a command that allows your other pcs to join, use it.
 
-On the main node run: `docker network create -d overlay my_docker_net`
+On the main node run: `docker network create -d overlay my_docker_overlay_net`
 
 The problem is that we can't chain commands when starting a docker service create, so we'll have to modify the base abyssos/abyss:dev docker container. We'll need to download packages for the installation, we'll add these to the our modified package.
 This method might also reduce internet usage.
