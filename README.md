@@ -86,6 +86,7 @@ iglu-unix --> iglunix
 ```
   /iglunix
   /root/iglunix
+  /usr/src/iglunix
 ```
 
 The `iglunix` repo tries to be agnostic to the install dir. This repo choses (because it must choose) for `/root/iglunix`.
