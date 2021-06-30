@@ -67,7 +67,7 @@ Execute QEMU directly with the following command:
 qemu-system-x86_64 path/to/disk -enable-kvm -m 4096
 ```
 
-NOTE: Qemu is broken, we don't know why, use virt-manager.
+NOTE: Qemu is broken if you don't pass `-m`
 
 ## Trivia
 
