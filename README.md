@@ -7,7 +7,7 @@ Iglunix for the uninitiated is a linux distribution designed to not use _GNU_, s
 
  # Usage
 
-## Fase 1: Docker
+## Phase 1: Docker
 This will create an llvm/musl toolchain.
 I've heard that you guys don't like waiting for code to be compiled.
 A docker swarm to the rescue, completely over engineered.
@@ -34,7 +34,7 @@ Modify DISTCC_HOSTS in `compile` in one container to point to all the docker dis
 When your compiles are finished, `docker_rm_farm` can be used to remove the compile farm.
 It could be useful to leave the compile farm around for the compilation indide the chroot. This is not yet supported.
 
-## Fase 2: Chroot
+## Phase 2: Chroot
 
 WARNING: This part makes use of loopback devices, if the kernel was updated but the system not rebooted, reboot.
 
@@ -57,7 +57,7 @@ There are 4 new commands the user should be aware of, they are written in chrono
   This is the script that has to be executed inside the chroot to compile all the required packages in the correct order.
   This will also generate `iglunix.img` in `/iglunix/`
 
-## Fase 3: Boot
+## Phase 3: Boot
 
 Use virt-manager or qemu to boot the `iglunix.img`.
 
