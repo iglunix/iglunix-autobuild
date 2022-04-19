@@ -8,6 +8,16 @@ cd build
 [ -d 'iglunix' ] || git clone --depth=1 https://github.com/iglunix/iglunix
 [ -d 'iglupkg' ] || git clone --depth=1 https://github.com/iglunix/iglupkg
 
+cd iglunix-bootstrap
+git pull
+cd ..
+cd iglunix
+git pull
+cd ..
+cd iglupkg
+git pull
+cd ..
+
 SYSROOT_S2=$(pwd)/sysroot
 IP=$(pwd)/iglupkg/
 
@@ -18,8 +28,17 @@ mkdir -p $LOGS
 echo === STAGE 1 === Build cross toolchain
 
 cd iglunix-bootstrap
-MAKE=gmake bad --gmake ./boot.sh
+
+if command -V bad 2> /dev/null; then
+	MAKE=gmake bad --gmake ./boot.sh
+else
+	MAKE=make ./boot.sh
+fi
+
 SYSROOT_S1=$(pwd)/sysroot
+
+export CC=$(pwd)/x86_64-iglunix-linux-musl-cc.sh
+export CXX=$(pwd)/x86_64-iglunix-linux-musl-c++.sh
 
 cd ..
 
