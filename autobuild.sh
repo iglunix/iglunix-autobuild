@@ -38,7 +38,9 @@ fi
 SYSROOT_S1=$(pwd)/sysroot
 
 export CC=$(pwd)/x86_64-iglunix-linux-musl-cc.sh
-export CXX=$(pwd)/x86_64-iglunix-linux-musl-c++.sh
+export CXX_INCL=$(pwd)/x86_64-iglunix-linux-musl-c++.sh
+export CXX_NOINCL=$(pwd)/x86_64-iglunix-linux-musl-c++-no-incl.sh
+export CXX=$CXX_INCL
 
 cd ..
 
@@ -70,7 +72,9 @@ echo === STAGE 2 === Build cross libs
 s2_build linux musl
 s2_build linux linux
 s2_build base libunwind
+export CXX=$CXX_NOINCL
 s2_build base libcxx
+export CXX=$CXX_INCL
 
 echo === STAGE 2 === Assemble sysroot
 
@@ -95,16 +99,23 @@ s3_build() {
 	cd ../../
 }
 
-s3_build linux linux
+#s3_build linux linux
 s3_build linux musl
 s3_build linux busybox
 s3_build base mksh
 s3_build base toybox
+s3_build base compiler-rt
 s3_build base libunwind
+export CXX=$CXX_NOINCL
 s3_build base libcxx
+export CXX=$CXX_INCL
 s3_build base llvm
 
 touch .autobuilt
+
+# TODO
+# - add wrapper scripts to use stage 2 sysroot in stage 3 instead of stage 1.
+# - get whole of base cross compiling
 
 # order to build packages
 #
