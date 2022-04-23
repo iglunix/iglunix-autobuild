@@ -10,6 +10,8 @@ cex() {
 	tar -xf iglunix/$PKGDIR/$PKGNAME/out/$PKGNAME.*.tar.zst -I zstd -C $CHROOT
 }
 
+cex linux limine
+cex linux linux
 cex linux musl
 cex linux busybox
 cex base mksh
@@ -18,3 +20,4 @@ cex base compiler-rt
 cex base libunwind
 cex base libcxx
 cex base llvm
+cex base oslo

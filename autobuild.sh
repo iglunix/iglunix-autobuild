@@ -50,7 +50,17 @@ s2_build() {
 	PKGDIR=$1
 	PKGNAME=$2
 	cd $1/$2
-	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir=/ fbp
+	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir= fbp
+	touch .s2
+	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
+	cd ../../
+}
+
+s2e_build() {
+	PKGDIR=$1
+	PKGNAME=$2
+	cd $1/$2
+	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp
 	touch .s2
 	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
 	cd ../../
@@ -78,14 +88,19 @@ export CXX=$CXX_INCL
 
 echo === STAGE 2 === Assemble sysroot
 
-[ -d "$SYSROOT_S2" ] || {
-	mkdir -p $SYSROOT_S2
-	
-	s2_extract linux musl
-	s2_extract linux linux
-	s2_extract base libunwind
-	s2_extract base libcxx
-}
+s2_extract linux musl
+s2_extract linux linux
+s2_extract base libunwind
+s2_extract base libcxx
+
+echo === STAGE 2 === Build extra libs
+
+s2e_build base zlib-ng
+s2_extract base zlib-ng
+s2e_build base libelf
+s2_extract base libelf
+s2e_build base openssl
+s2_extract base openssl
 
 echo === STAGE 3 === Build target packages
 
@@ -99,7 +114,9 @@ s3_build() {
 	cd ../../
 }
 
-#s3_build linux linux
+s3_build linux limine
+s3_build linux linux
+s3_build linux make_ext4fs
 s3_build linux musl
 s3_build linux busybox
 s3_build base mksh
@@ -110,6 +127,24 @@ export CXX=$CXX_NOINCL
 s3_build base libcxx
 export CXX=$CXX_INCL
 s3_build base llvm
+s3_build base oslo
+s3_build base zlib-ng
+s3_build base bmake
+s3_build base byacc
+s3_build base curl
+s3_build base openssl
+s3_build base doas
+s3_build base expat
+s3_build base flex
+s3_build base libelf
+s3_build base man-pages-posix
+s3_build base netbsd-curses
+s3_build base om4
+s3_build base samurai
+s3_build base zstd
+
+s3_build bad bad
+s3_build bad gmake
 
 touch .autobuilt
 
