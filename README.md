@@ -5,8 +5,13 @@ Iglunix for the uninitiated is a linux distribution designed to not use _GNU_, s
 
 
 
- # Usage
+# Usage
 
+run `./autobuild.sh` to compile packages. Then run `./chroot.sh` to create a chroot.
+To try Iglunix in a chroot run `./enter_chroot.sh`. If you want to create an installation image
+run `./img.sh`.
+
+<!--
 ## Phase 1: Docker
 This will create an llvm/musl toolchain.
 I've heard that you guys don't like waiting for code to be compiled.
@@ -68,6 +73,7 @@ qemu-system-x86_64 path/to/disk -enable-kvm -m 4096
 ```
 
 NOTE: Qemu is broken if you don't pass `-m`
+-->
 
 ## Trivia
 
