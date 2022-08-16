@@ -1,5 +1,6 @@
 #!/bin/sh -e
 
+
 help_function() {
 	printf %b \
 		"Usage: $0 [-ch]\n"	\
@@ -16,33 +17,54 @@ print_info() {
 	fi
 }
 
-while getopts "ch" opt
+print_err() {
+	if [ "$arg_c" -eq 1 ]; then
+		printf "%b" "\033[0;31m$1\n\033[m"
+	else
+		printf "%b" "$1\n"
+	fi
+}
+
+function on_exit {
+  # Your cleanup code here
+  print_err "ERROR: the last step killed me :("
+  if [ $SILENT -eq 1 ]; then
+  	print_err "HELP:  use tail on the last step in the log directory."
+  fi
+}
+trap on_exit EXIT
+
+SILENT=0
+DEBUG=0
+
+while getopts "chsd" opt
 do
 	case "$opt" in
 		c ) arg_c=1 ;;
 		h ) help_function ;;
+		s ) SILENT=1;;
+		d ) DEBUG=1;;
 		? ) help_function ;;
 	esac
 done
 
-
 mkdir -p build
-
 cd build
-# TODO: add option for using native toolchain for stage 0
-[ -d 'iglunix-bootstrap' ] || git clone --depth=1 https://github.com/iglunix/iglunix-bootstrap
-[ -d 'iglunix' ] || git clone --depth=1 https://github.com/iglunix/iglunix
-[ -d 'iglupkg' ] || git clone --depth=1 https://github.com/iglunix/iglupkg
+if [ "$DEBUG" -eq 0 ]; then
+	[ -d 'iglunix-bootstrap' ] || git clone --depth=1 https://github.com/iglunix/iglunix-bootstrap
+	[ -d 'iglunix' ] || git clone --depth=1 https://github.com/iglunix/iglunix
+	[ -d 'iglupkg' ] || git clone --depth=1 https://github.com/iglunix/iglupkg
 
-cd iglunix-bootstrap
-git pull
-cd ..
-cd iglunix
-git pull
-cd ..
-cd iglupkg
-git pull
-cd ..
+	cd iglunix-bootstrap
+	git pull
+	cd ..
+	cd iglunix
+	git pull
+	cd ..
+	cd iglupkg
+	git pull
+	cd ..
+fi
 
 SYSROOT_S2=$(pwd)/sysroot
 IP=$(pwd)/iglupkg/
@@ -56,9 +78,9 @@ print_info "=== STAGE 1 === Build cross toolchain"
 cd iglunix-bootstrap
 
 if command -V bad 2> /dev/null; then
-	MAKE=gmake bad --gmake ./boot.sh
+	MAKE=gmake bad --gmake ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
 else
-	MAKE=make ./boot.sh
+	MAKE=make ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
 fi
 
 SYSROOT_S1=$(pwd)/sysroot
@@ -77,9 +99,12 @@ s2_build() {
 	PKGNAME=$2
 	cd $1/$2
 	print_info "== Building $1/$2 =="
-	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir= fbp
+	if [ $SILENT -eq 0 ]; then
+		[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir= fbp
+	else
+		[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir= fbp 2>$LOGS/$2.1.err > $LOGS/$2.1.out
+	fi
 	touch .s2
-	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
 	cd ../../
 }
 
@@ -88,9 +113,13 @@ s2e_build() {
 	PKGNAME=$2
 	cd $1/$2
 	print_info "== Building $1/$2 =="
-	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp
+	if [ $SILENT -eq 0 ]; then
+		[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp
+	else
+		[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp 2>$LOGS/$2.1.err > $LOGS/$2.1.out
+	fi
+	
 	touch .s2
-	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
 	cd ../../
 }
 
@@ -142,7 +171,12 @@ s3_build() {
 	PKGNAME=$2
 	cd $1/$2
 	print_info "== Building $1/$2 =="
-	[ -f .s3 ]  || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 fbp
+	if [ $SILENT -eq 0 ]; then
+		[ -f .s3 ]  || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 fbp
+	else
+		[ -f .s3 ]  || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 fbp 2>$LOGS/$2.1.err > $LOGS/$2.1.out
+	fi
+	
 	touch .s3
 	# 2>$LOGS/$2.2.err > $LOGS/$2.2.out
 	cd ../../
