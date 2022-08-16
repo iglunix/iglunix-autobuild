@@ -1,5 +1,31 @@
 #!/bin/sh -e
 
+help_function() {
+	printf %b \
+		"Usage: $0 [-ch]\n"	\
+		'\t-c\tenable color output\n'	\
+		'\t-h\tprint this help screen\n'
+	exit 0
+}
+
+print_info() {
+	if [ "$arg_c" -eq 1 ]; then
+		printf "%b" "\033[1;36m$1\n\033[m"
+	else
+		printf "%b" "$1\n"
+	fi
+}
+
+while getopts "ch" opt
+do
+	case "$opt" in
+		c ) arg_c=1 ;;
+		h ) help_function ;;
+		? ) help_function ;;
+	esac
+done
+
+
 mkdir -p build
 
 cd build
@@ -25,7 +51,7 @@ LOGS=$(pwd)/logs
 
 mkdir -p $LOGS
 
-echo === STAGE 1 === Build cross toolchain
+print_info "=== STAGE 1 === Build cross toolchain"
 
 cd iglunix-bootstrap
 
@@ -44,12 +70,13 @@ export CXX=$CXX_INCL
 
 cd ..
 
-echo === STAGE 1 === Done
+print_info "=== STAGE 1 === Done"
 
 s2_build() {
 	PKGDIR=$1
 	PKGNAME=$2
 	cd $1/$2
+	print_info "== Building $1/$2 =="
 	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S1 --for-cross --for-cross-dir= fbp
 	touch .s2
 	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
@@ -60,6 +87,7 @@ s2e_build() {
 	PKGDIR=$1
 	PKGNAME=$2
 	cd $1/$2
+	print_info "== Building $1/$2 =="
 	[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp
 	touch .s2
 	# 2>$LOGS/$2.1.err > $LOGS/$2.1.out
@@ -70,6 +98,7 @@ s2_extract() {
 	PKGDIR=$1
 	PKGNAME=$2
 	cd $1/$2/out
+	print_info "== Extracting $1/$2 =="
 	tar -xf $2-*.tar.zst -C $SYSROOT_S2 -I zstd
 	cd ../../../
 }
@@ -77,7 +106,7 @@ s2_extract() {
 
 cd iglunix
 
-echo === STAGE 2 === Build cross libs
+print_info "=== STAGE 2 === Build cross libs"
 
 s2_build linux musl
 s2_build linux linux
@@ -86,28 +115,33 @@ export CXX=$CXX_NOINCL
 s2_build base libcxx
 export CXX=$CXX_INCL
 
-echo === STAGE 2 === Assemble sysroot
+print_info "=== STAGE 2 === Assemble sysroot"
 
+mkdir -p $SYSROOT_S2
 s2_extract linux musl
 s2_extract linux linux
 s2_extract base libunwind
 s2_extract base libcxx
 
-echo === STAGE 2 === Build extra libs
+print_info "=== STAGE 2 === Build extra libs"
 
 s2e_build base zlib-ng
+sync
 s2_extract base zlib-ng
 s2e_build base libelf
+sync
 s2_extract base libelf
 s2e_build base openssl
+sync
 s2_extract base openssl
 
-echo === STAGE 3 === Build target packages
+print_info "=== STAGE 3 === Build target packages"
 
 s3_build() {
 	PKGDIR=$1
 	PKGNAME=$2
 	cd $1/$2
+	print_info "== Building $1/$2 =="
 	[ -f .s3 ]  || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 fbp
 	touch .s3
 	# 2>$LOGS/$2.2.err > $LOGS/$2.2.out
