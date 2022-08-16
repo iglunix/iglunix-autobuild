@@ -11,6 +11,12 @@ run `./autobuild.sh` to compile packages. Then run `./chroot.sh` to create a chr
 To try Iglunix in a chroot run `./enter_chroot.sh`. If you want to create an installation image
 run `./img.sh`.
 
+# Dependencies
+
+Please make certain that the following packages are available on the host.
+`nasm, lld, samurai`
+
+
 <!--
 ## Phase 1: Docker
 This will create an llvm/musl toolchain.
