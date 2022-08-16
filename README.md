@@ -14,7 +14,7 @@ run `./img.sh`.
 # Dependencies
 
 Please make certain that the following packages are available on the host.
-`nasm, lld, samurai`
+`nasm, lld, samurai, bmake`
 
 
 <!--
