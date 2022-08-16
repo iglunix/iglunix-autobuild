@@ -215,6 +215,8 @@ s3_build bad gmake
 
 touch .autobuilt
 
+trap - EXIT
+
 # TODO
 # - add wrapper scripts to use stage 2 sysroot in stage 3 instead of stage 1.
 # - get whole of base cross compiling
