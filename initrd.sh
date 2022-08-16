@@ -8,6 +8,7 @@ cex() {
 	tar -xf build/iglunix/$PKGDIR/$PKGNAME/out/$PKGNAME.*.tar.zst -I zstd -C build/initrd
 }
 
+cex linux linux
 cex linux musl
 cex linux make_ext4fs
 cex linux busybox
