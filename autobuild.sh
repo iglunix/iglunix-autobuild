@@ -25,7 +25,7 @@ print_err() {
 	fi
 }
 
-function on_exit {
+on_exit() {
   print_err "ERROR: the last step killed me :("
   if [ $SILENT -eq 1 ]; then
   	print_err "HELP:  use tail on the last step in the log directory."
