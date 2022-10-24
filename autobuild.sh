@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+#Define arg_c to avoid illegal number warnings
+arg_c=0
 
 help_function() {
 	printf %b \
@@ -10,7 +12,7 @@ help_function() {
 }
 
 print_info() {
-	if [ "$arg_c" -eq 1 ]; then
+	if [ "$arg_c" -eq "1" ]; then
 		printf "%b" "\033[1;36m$1\n\033[m"
 	else
 		printf "%b" "$1\n"
