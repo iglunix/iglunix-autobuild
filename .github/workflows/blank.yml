@@ -35,27 +35,27 @@ jobs:
           sudo apt install curl
           sudo apt install flex
           sudo apt install yacc
-          
+
           sudo apt install cmake
           #
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
           sudo ./llvm.sh 13
-          
+
           sudo ln -s /bin/ninja /bin/samu
           # sudo apt install clang
           # sudo apt install lld
-          
+
           #sudo ln -s /bin/clang-13 /bin/clang
           #sudo ln -s /bin/clang++-13 /bin/clang++
           #sudo ln -s /bin/lld-13 /bin/lld
           #sudo ln -s /bin/ld.lld-13 /bin/ld.lld
-        
-        
-          
-          
+
+
+
+
       - name: run fire test
         run: |
           echo "start autobuild"
-          ./autobuild.sh
+          sh -e -x ./autobuild.sh
           echo "TODO: test chroot"
