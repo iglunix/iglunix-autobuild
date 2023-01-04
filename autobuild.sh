@@ -79,9 +79,17 @@ print_info "=== STAGE 1 === Build cross toolchain"
 cd iglunix-bootstrap
 
 if command -V bad 2> /dev/null; then
-	MAKE=gmake bad --gmake ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
+	if [ $SILENT -eq 0 ]; then
+		MAKE=gmake bad --gmake ./boot.sh
+	else
+		MAKE=gmake bad --gmake ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
+	fi
 else
-	MAKE=make ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
+	if [ $SILENT -eq 0 ]; then
+		MAKE=make ./boot.sh
+	else
+		MAKE=make ./boot.sh 2>$LOGS/boot.1.err > $LOGS/boot.1.out
+	fi
 fi
 
 SYSROOT_S1=$(pwd)/sysroot
@@ -119,7 +127,7 @@ s2e_build() {
 	else
 		[ -f .s2 ] || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 --for-cross --for-cross-dir= fbp 2>$LOGS/$2.1.err > $LOGS/$2.1.out
 	fi
-	
+
 	touch .s2
 	cd ../../
 }
@@ -177,7 +185,7 @@ s3_build() {
 	else
 		[ -f .s3 ]  || ${IP}iglupkg.sh --with-cross=x86_64 --with-cross-dir=$SYSROOT_S2 fbp 2>$LOGS/$2.1.err > $LOGS/$2.1.out
 	fi
-	
+
 	touch .s3
 	# 2>$LOGS/$2.2.err > $LOGS/$2.2.out
 	cd ../../
@@ -240,7 +248,7 @@ trap - EXIT
 # libunwind
 # libcxx
 # llvm
-# 
+#
 # mksh
 # toybox
 # busybox
