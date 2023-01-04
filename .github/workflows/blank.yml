@@ -31,16 +31,16 @@ jobs:
 
       - name: install deps
         run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 13
+
           sudo apt install ninja-build
           sudo apt install curl
           sudo apt install flex
           sudo apt install yacc
 
           sudo apt install cmake
-          #
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 13
 
           sudo ln -s /bin/ninja /bin/samu
           # sudo apt install clang
