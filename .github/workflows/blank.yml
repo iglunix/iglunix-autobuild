@@ -41,6 +41,7 @@ jobs:
           sudo apt install bison
 
           sudo apt install cmake
+          sudo apt install nasm
 
           sudo ln -s /bin/ninja /bin/samu
           # sudo ln -s /bin/bison /bin/yacc
