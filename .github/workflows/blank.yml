@@ -45,10 +45,11 @@ jobs:
           sudo ln -s /bin/ninja /bin/samu
           # sudo apt install clang
           # sudo apt install lld
-          sudo ln -s /bin/clang-13 /bin/clang
-          sudo ln -s /bin/clang++-13 /bin/clang++
-          sudo ln -s /bin/lld-13 /bin/lld
-          sudo ln -s /bin/ld.lld-13 /bin/ld.lld
+          
+          #sudo ln -s /bin/clang-13 /bin/clang
+          #sudo ln -s /bin/clang++-13 /bin/clang++
+          #sudo ln -s /bin/lld-13 /bin/lld
+          #sudo ln -s /bin/ld.lld-13 /bin/ld.lld
         
         
           
