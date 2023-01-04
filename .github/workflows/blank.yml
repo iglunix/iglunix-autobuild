@@ -43,7 +43,7 @@ jobs:
           sudo apt install cmake
 
           sudo ln -s /bin/ninja /bin/samu
-          sudo ln -s /bin/yacc /bin/samu
+          sudo ln -s /bin/bison /bin/yacc
           # sudo apt install clang
           # sudo apt install lld
 
