@@ -52,8 +52,7 @@ jobs:
           #sudo ln -s /bin/clang++-13 /bin/clang++
           #sudo ln -s /bin/lld-13 /bin/lld
           sudo ln -s /bin/ld.lld-13 /bin/ld.lld
-
-
+          sudo ln -s /bin/llvm-ar-10 /bin/llvm-ar
 
 
       - name: run fire test
