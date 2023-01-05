@@ -52,7 +52,10 @@ jobs:
           #sudo ln -s /bin/clang++-13 /bin/clang++
           #sudo ln -s /bin/lld-13 /bin/lld
           sudo ln -s /bin/ld.lld-13 /bin/ld.lld
-          sudo ln -s /bin/llvm-ar-10 /bin/llvm-ar
+          sudo ln -s /bin/llvm-ar-13 /bin/llvm-ar
+          sudo ln -s /bin/llvm-nm-13 /bin/llvm-nm
+          sudo ln -s /bin/llvm-objdump-13 /bin/llvm-objdump
+          sudo ln -s /bin/llvm-objcopy-13 /bin/llvm-objcopy
 
 
       - name: run fire test
