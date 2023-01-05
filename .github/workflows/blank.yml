@@ -56,6 +56,7 @@ jobs:
           sudo ln -s /bin/llvm-nm-13 /bin/llvm-nm
           sudo ln -s /bin/llvm-objdump-13 /bin/llvm-objdump
           sudo ln -s /bin/llvm-objcopy-13 /bin/llvm-objcopy
+          sudo ln -s /bin/llvm-strip-13 /bin/llvm-strip
 
 
       - name: run fire test
