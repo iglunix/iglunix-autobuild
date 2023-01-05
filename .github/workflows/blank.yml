@@ -58,5 +58,5 @@ jobs:
       - name: run fire test
         run: |
           echo "start autobuild"
-          sh -e -x ./autobuild.sh
+          MAKEFLAGS=--trace sh -e -x ./autobuild.sh
           echo "TODO: test chroot"
