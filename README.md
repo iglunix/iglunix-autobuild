@@ -16,6 +16,8 @@ run `./img.sh`.
 Please make certain that the following packages are available on the host.
 `nasm, lld, samurai, bmake`
 
+This script only works on Ubuntu 20.04!
+
 # Alternative method
 
 There is a different method to create the img. The needed files are also in this repo, to learn more about it look at the source of the readme file. It is hidden because it is currently unsupported. But it works via docker.
