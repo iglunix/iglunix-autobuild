@@ -147,6 +147,7 @@ cd iglunix
 print_info "=== STAGE 2 === Build cross libs"
 
 s2_build linux musl
+# NOTE: this will only build the headers! Look at the build.sh for more information.
 s2_build linux linux
 s2_build base libunwind
 export CXX=$CXX_NOINCL
