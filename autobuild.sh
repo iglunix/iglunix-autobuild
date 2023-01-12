@@ -217,7 +217,7 @@ s3_build base flex
 s3_build base libelf
 s3_build base man-pages-posix
 s3_build base netbsd-curses
-s3_build base om4
+#s3_build base om4
 s3_build base samurai
 s3_build base zstd
 
