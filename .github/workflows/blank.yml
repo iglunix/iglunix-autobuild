@@ -77,7 +77,7 @@ jobs:
 
       - name: Gen image
         run: |
-          sh -e -x ./img.sh
+          sudo sh -e -x ./img.sh
 
       - uses: actions/upload-artifact@v3
         with:
