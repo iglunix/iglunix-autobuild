@@ -43,6 +43,7 @@ jobs:
           sudo apt install cmake
           sudo apt install nasm
           sudo apt install bmake
+          sudo apt install zstd
 
           sudo ln -s /bin/ninja /bin/samu
           # sudo ln -s /bin/bison /bin/yacc
@@ -60,8 +61,25 @@ jobs:
           sudo ln -s /bin/llvm-strip-13 /bin/llvm-strip
 
 
-      - name: run fire test
+      - name: Compile
         run: |
           echo "start autobuild"
           sh -e -x ./autobuild.sh
           echo "TODO: test chroot"
+
+      - name: Gen chroot
+        run: |
+          sh -e -x ./chroot.sh
+
+      - name: Gen initrd
+        run: |
+          sh -e -x ./initrd.sh
+
+      - name: Gen image
+        run: |
+          sh -e -x ./img.sh
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Upload image
+          path: iglunix.img.zst
