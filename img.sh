@@ -53,7 +53,7 @@ iex base flex
 iex base libelf
 iex base man-pages-posix
 iex base netbsd-curses
-iex base om4
+# iex base om4
 iex base samurai
 iex base zstd
 
