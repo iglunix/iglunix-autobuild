@@ -82,4 +82,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Upload image
-          path: iglunix.img.zst
+          path: ./build/iglunix.img.zst
