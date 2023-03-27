@@ -39,8 +39,8 @@ BASE=$(pwd)
 cp build_pkg.sh $CHROOT
 chmod +x $CHROOT/build_pkg.sh
 
-to_build="base/mksh
-base/bmake
+to_build="base/bmake
+base/mksh
 bad/bad"
 
 cd build
