@@ -47,8 +47,8 @@ to_build="base/bmake
 base/om4
 bad/bad
 bad/gmake
-base/flex
-base/byacc"
+base/byacc
+base/flex"
 
 cd build
 git clone https://github.com/iglunix/iglupkg
