@@ -54,7 +54,9 @@ base/samurai
 base/pkgconf
 base/perl
 base/openssl
-base/cmake"
+base/cmake
+base/libffi
+base/python"
 
 cd build
 git clone https://github.com/iglunix/iglupkg
