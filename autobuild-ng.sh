@@ -52,6 +52,6 @@ IGLUNIX_BASE=$(pwd)
 
 for pkg in $to_build; do
 	cd $pkg
-	$IGLUPKG fetch
+	$IGLUPKG f
 	cd $IGLUNIX_BASE
 done
