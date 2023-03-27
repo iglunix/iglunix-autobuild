@@ -44,10 +44,10 @@ cp build_pkg.sh $CHROOT
 chmod +x $CHROOT/build_pkg.sh
 
 to_build="base/bmake
+base/byacc
 base/om4
 bad/bad
 bad/gmake
-base/byacc
 base/flex"
 
 cd build
