@@ -35,6 +35,8 @@ jobs:
 
 
       - name: Compile
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           echo "start autobuild"
           sh -e -x ./autobuild-ng.sh
