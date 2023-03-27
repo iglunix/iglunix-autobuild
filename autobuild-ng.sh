@@ -39,7 +39,9 @@ BASE=$(pwd)
 cp build_pkg.sh $CHROOT
 chmod +x $CHROOT/build_pkg.sh
 
-to_build="base/mksh"
+to_build="base/mksh
+base/bmake
+bad/bad"
 
 cd build
 git clone https://github.com/iglunix/iglupkg
