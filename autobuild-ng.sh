@@ -52,6 +52,7 @@ bad/gmake
 base/flex
 base/samurai
 base/pkgconf
+base/openssl
 base/cmake"
 
 cd build
