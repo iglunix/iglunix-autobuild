@@ -44,8 +44,11 @@ cp build_pkg.sh $CHROOT
 chmod +x $CHROOT/build_pkg.sh
 
 to_build="base/bmake
+base/om4
 bad/bad
-bad/gmake"
+bad/gmake
+base/flex
+base/byacc"
 
 cd build
 git clone https://github.com/iglunix/iglupkg
