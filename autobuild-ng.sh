@@ -7,7 +7,9 @@ else
 fi
 
 if [ ! -z "$GITHUB_TOKEN" ]; then
-	./fetch_latest.sh
+	while ! ./fetch_latest.sh; do
+    		sleep 5
+	done
 fi
 
 if [ ! -d "./sysroot" ]; then
@@ -25,4 +27,4 @@ sudo mount --bind /dev ./sysroot/dev
 sudo mount --bind /sys ./sysroot/sys
 sudo mount --bind /proc ./sysroot/proc
 
-sudo chroot ./sysroot /bin/toybox --version
+sudo chroot ./sysroot /usr/bin/clang --version
