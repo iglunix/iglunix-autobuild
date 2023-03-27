@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -31,55 +31,10 @@ jobs:
 
       - name: install deps
         run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh 13
-
-          sudo apt install ninja-build
-          sudo apt install curl
-          sudo apt install flex
-          sudo apt install bison
-
-          sudo apt install cmake
-          sudo apt install nasm
-          sudo apt install bmake
-          sudo apt install zstd
-
-          sudo ln -s /bin/ninja /bin/samu
-          # sudo ln -s /bin/bison /bin/yacc
-          # sudo apt install clang
-          # sudo apt install lld
-
-          #sudo ln -s /bin/clang-13 /bin/clang
-          #sudo ln -s /bin/clang++-13 /bin/clang++
-          #sudo ln -s /bin/lld-13 /bin/lld
-          sudo ln -s /bin/ld.lld-13 /bin/ld.lld
-          sudo ln -s /bin/llvm-ar-13 /bin/llvm-ar
-          sudo ln -s /bin/llvm-nm-13 /bin/llvm-nm
-          sudo ln -s /bin/llvm-objdump-13 /bin/llvm-objdump
-          sudo ln -s /bin/llvm-objcopy-13 /bin/llvm-objcopy
-          sudo ln -s /bin/llvm-strip-13 /bin/llvm-strip
+          sudo apt install jq
 
 
       - name: Compile
         run: |
           echo "start autobuild"
-          sh -e -x ./autobuild.sh
-          echo "TODO: test chroot"
-
-      - name: Gen chroot
-        run: |
-          sh -e -x ./chroot.sh
-
-      - name: Gen initrd
-        run: |
-          sh -e -x ./initrd.sh
-
-      - name: Gen image
-        run: |
-          sudo sh -e -x ./img.sh
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Upload image
-          path: ./build/iglunix.img.zst
+          sh -e -x ./autobuild-ng.sh
