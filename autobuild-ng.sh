@@ -52,6 +52,7 @@ bad/gmake
 base/flex
 base/samurai
 base/pkgconf
+base/perl
 base/openssl
 base/cmake"
 
