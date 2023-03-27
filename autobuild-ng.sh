@@ -44,7 +44,7 @@ base/toybox
 cd build
 git clone https://github.com/iglunix/iglupkg
 IGLUPKG_BASE=$(pwd)/iglupkg
-IGLUPKG=$IGLUPKG_BASE/iglupkg/iglupkg.sh
+IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
 
 git clone https://github.com/iglunix/iglunix
 cd iglunix
