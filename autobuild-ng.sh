@@ -37,9 +37,7 @@ CHROOT=$(pwd)/chroot
 BASE=$(pwd)
 
 to_build="linux/musl
-base/mksh
-base/toybox
-"
+base/mksh"
 
 cd build
 git clone https://github.com/iglunix/iglupkg
