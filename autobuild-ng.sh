@@ -18,6 +18,10 @@ fi
 
 mkdir -p build
 
+mkdir -p ./sysroot/etc
+printf 'root:x:0:root\n' > ./sysroot/etc/group
+printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
+
 # setup chroot
 mkdir -p ./sysroot/tmp
 mkdir -p ./sysroot/dev
