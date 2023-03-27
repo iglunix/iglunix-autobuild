@@ -14,3 +14,15 @@ if [ ! -d "./sysroot" ]; then
 	printf '%s\n' 'Must provide ./sysroot or provide $GITHUB_TOKEN to download one!'
 fi
 
+# setup chroot
+mkdir -p ./sysroot/tmp
+mkdir -p ./sysroot/dev
+mkdir -p ./sysroot/sys
+mkdir -p ./sysroot/proc
+
+sudo mount --bind /tmp ./sysroot/tmp
+sudo mount --bind /dev ./sysroot/dev
+sudo mount --bind /sys ./sysroot/sys
+sudo mount --bind /proc ./sysroot/proc
+
+sudo chroot ./sysroot /bin/toybox --version
