@@ -33,8 +33,11 @@ sudo mount --bind $(pwd)/build ./sysroot/build
 
 sudo chroot ./sysroot /usr/bin/clang --version
 
-CHROOT=$(pwd)/chroot
+CHROOT=$(pwd)/sysroot
 BASE=$(pwd)
+
+cp build_pkg.sh $CHROOT
+chmod +x $CHROOT/build_pkg.sh
 
 to_build="linux/musl
 base/mksh"
@@ -51,5 +54,6 @@ IGLUNIX_BASE=$(pwd)
 for pkg in $to_build; do
 	cd $pkg
 	$IGLUPKG f
+	sudo chroot $CHROOT /build_pkg.sh $pkg
 	cd $IGLUNIX_BASE
 done
