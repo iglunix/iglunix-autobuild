@@ -56,6 +56,7 @@ base/perl
 base/openssl
 base/cmake
 base/libffi
+base/zlib-ng
 base/python"
 
 cd build
