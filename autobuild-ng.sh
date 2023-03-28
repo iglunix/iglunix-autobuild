@@ -88,5 +88,5 @@ for pkg in $to_build; do
 	cd $IGLUNIX_BASE
 done
 
-tar -cf pkgs.tar */*/*.*.tar
+tar -cf pkgs.tar */*/out/*.*.tar
 zstd --ultra -22 pkgs.tar
