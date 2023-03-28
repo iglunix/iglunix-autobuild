@@ -43,21 +43,33 @@ BASE=$(pwd)
 cp build_pkg.sh $CHROOT
 chmod +x $CHROOT/build_pkg.sh
 
-to_build="base/mksh
-base/bmake
-base/byacc
-base/om4
-bad/bad
-bad/gmake
-base/flex
-base/samurai
-base/pkgconf
-base/perl
-base/openssl
-base/cmake
-base/libffi
-base/zlib-ng
-base/python"
+tbf=$(mktemp)
+
+atb() {
+	printf '%s\n' $1 >> $tbf
+}
+
+atb base/mksh
+atb base/bmake
+atb base/byacc
+atb base/om4
+atb bad/bad
+atb bad/gmake
+atb base/flex
+atb base/samurai
+atb base/pkgconf
+atb base/perl
+atb base/openssl
+atb base/cmake
+atb base/curl
+atb base/libffi
+atb base/zlib-ng
+atb base/python
+atb base/oslo
+atb base/netbsd-curses
+atb base/man-pages-posix
+
+to_build=$(cat $tbf)
 
 cd build
 git clone https://github.com/iglunix/iglupkg
