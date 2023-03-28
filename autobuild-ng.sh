@@ -70,6 +70,7 @@ atb base/netbsd-curses
 atb base/man-pages-posix
 
 to_build=$(cat $tbf)
+rm -f $tbf
 
 cd build
 git clone https://github.com/iglunix/iglupkg
@@ -86,3 +87,6 @@ for pkg in $to_build; do
 	sudo chroot $CHROOT /build_pkg.sh $pkg
 	cd $IGLUNIX_BASE
 done
+
+tar -cf pkgs.tar */*/*.*.tar
+zstd --ultra -22 pkgs.tar
