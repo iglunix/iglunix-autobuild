@@ -107,7 +107,7 @@ echo === Assembling initrd ===
 mkdir -p $BUILD_BASE/initrd
 efi linux/linux
 efi linux/busybox
-efi base/musl
+efi linux/musl
 efi base/toybox
 efi base/mksh
 
