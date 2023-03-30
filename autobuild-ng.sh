@@ -71,6 +71,7 @@ atb base/python
 atb base/oslo
 atb base/netbsd-curses
 atb base/man-pages-posix
+atb linux/linux
 
 to_build=$(cat $tbf)
 rm -f $tbf
