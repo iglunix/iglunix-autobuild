@@ -77,6 +77,8 @@ to_build=$(cat $tbf)
 rm -f $tbf
 
 cd build
+BUILD_BASE=$(pwd)
+
 git clone https://github.com/iglunix/iglupkg
 IGLUPKG_BASE=$(pwd)/iglupkg
 IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
@@ -94,3 +96,45 @@ done
 
 tar -cf pkgs.tar */*/out/*.*.tar
 zstd --ultra -22 pkgs.tar
+
+cd $BUILD_BASE
+
+efi() {
+	tar -xf $IGLUNIX_BASE/$1/out/*.*.tar -C $BUILD_BASE/initrd
+}
+
+echo === Assembling initrd ===
+mkdir -p $BUILD_BASE/initrd
+efi linux/linux
+efi linux/busybox
+efi base/musl
+efi base/toybox
+efi base/mksh
+
+# The actual kernel is not needed inside the initrd.
+mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
+
+cd initrd
+
+cat > init << EOF
+#!/bin/sh
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+
+mkdir -p /dev
+mkdir -p /tmp
+mkdir -p /sys
+mkdir -p /proc
+
+mount -t tmpfs tmpfs /dev
+mount -t tmpfs tmpfs /tmp
+mount -t sysfs sysfs /sys
+mount -t proc proc /proc
+
+exec /bin/sh
+
+EOF
+
+chmod +x init
+
+find . | cpio -H newc -o > $BUILD_BASE/initrd.cpio
+cd $BUILD_BASE

@@ -46,3 +46,14 @@ jobs:
         with:
           name: packages
           path: build/iglunix/pkgs.tar.zst
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kernel
+          path: build/vmlinuz
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kernel
+          path: build/initrd.cpio
+
