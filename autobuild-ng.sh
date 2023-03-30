@@ -143,12 +143,12 @@ dd if=/dev/zero of=disk.img bs=1M count=128
 mkfs.vfat disk.img
 mkdir -p boot-disk
 sudo mount disk.img boot-disk
-cp $BUILD_BASE/initrd.cpio boot-disk/initrd
-cp $BUILD_BASE/vmlinuz boot-disk
+sudo cp $BUILD_BASE/initrd.cpio boot-disk/initrd
+sudo cp $BUILD_BASE/vmlinuz boot-disk
 
-tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
-mv boot-disk/boot/efi boot-disk/
-rmdir boot-disk/boot
-find boot-disk
+sudo tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
+sudo mv boot-disk/boot/efi boot-disk/
+sudo rmdir boot-disk/boot
+sudo find boot-disk
 sudo umount boot-disk
 sync
