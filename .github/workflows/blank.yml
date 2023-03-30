@@ -57,3 +57,8 @@ jobs:
           name: initrd
           path: build/initrd.cpio
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: boot-disk
+          path: build/disk.img
+
