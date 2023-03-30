@@ -55,6 +55,9 @@ atb base/byacc
 atb base/om4
 atb bad/bad
 atb bad/gmake
+atb base/musl
+atb linux/busybox
+atb base/toybox
 atb base/flex
 atb base/samurai
 atb base/pkgconf
