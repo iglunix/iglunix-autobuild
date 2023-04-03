@@ -37,6 +37,7 @@ jobs:
         run: |
           sudo apt install jq
           sudo apt install zstd
+          sudo apt install qemu-user-static
 
 
       - name: Compile
