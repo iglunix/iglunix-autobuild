@@ -23,7 +23,7 @@ printf 'root:x:0:root\n' > ./sysroot/etc/group
 printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
 
 mkdir -p ./sysroot/usr/bin
-cp /usr/bin/qemu-aarch64-static ./sysroot/usr/bin/
+cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
 
 # setup chroot
 mkdir -p ./sysroot/tmp
