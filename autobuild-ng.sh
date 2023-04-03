@@ -22,6 +22,9 @@ mkdir -p ./sysroot/etc
 printf 'root:x:0:root\n' > ./sysroot/etc/group
 printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
 
+mkdir -p ./sysroot/usr/bin
+cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+
 # setup chroot
 mkdir -p ./sysroot/tmp
 mkdir -p ./sysroot/dev
