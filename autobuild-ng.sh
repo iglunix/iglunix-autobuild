@@ -72,6 +72,7 @@ atb base/oslo
 # atb base/netbsd-curses
 # atb base/man-pages-posix
 atb linux/linux
+atb base/init
 
 to_build=$(cat $tbf)
 rm -f $tbf
@@ -110,6 +111,7 @@ efi linux/busybox
 efi linux/musl
 efi base/toybox
 efi base/mksh
+efi base/init
 
 # The actual kernel is not needed inside the initrd.
 mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
@@ -120,17 +122,7 @@ cat > init << EOF
 #!/bin/sh
 export PATH=/usr/sbin:/usr/bin:/sbin:/bin
 
-mkdir -p /dev
-mkdir -p /tmp
-mkdir -p /sys
-mkdir -p /proc
-
-mount -t tmpfs tmpfs /dev
-mount -t tmpfs tmpfs /tmp
-mount -t sysfs sysfs /sys
-mount -t proc proc /proc
-
-exec /bin/sh
+exec /sbin/init
 
 EOF
 
