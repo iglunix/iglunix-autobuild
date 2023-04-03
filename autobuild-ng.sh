@@ -126,6 +126,18 @@ exec /sbin/init
 
 EOF
 
+cat > etc/hostname << EOF
+iglunix
+EOF
+
+cat > etc/passwd << EOF
+root:x:0:0:Admin,,,:/root:/bin/sh
+EOF
+
+cat > etc/group << EOF
+root:x:0:
+EOF
+
 chmod +x init
 
 find . | cpio -H newc -o > $BUILD_BASE/initrd.cpio
