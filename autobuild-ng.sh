@@ -83,18 +83,25 @@ rm -f $tbf
 cd build
 BUILD_BASE=$(pwd)
 
-git clone https://github.com/iglunix/iglupkg
 IGLUPKG_BASE=$(pwd)/iglupkg
+if [ ! -d "$IGLUPKG_BASE" ]
+then
+	git clone https://github.com/iglunix/iglupkg
+fi
+
 IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
 
-git clone https://github.com/iglunix/iglunix
+IGLUNIX_BASE=$(pwd)/iglunix
+if [ ! -d "$IGLUNIX_BASE" ]
+then
+	git clone https://github.com/iglunix/iglunix
+fi
 cd iglunix
-IGLUNIX_BASE=$(pwd)
 
 for pkg in $to_build; do
 	cd $pkg
 	$IGLUPKG f
-	sudo chroot $CHROOT /build_pkg.sh $pkg
+	sudo chroot $CHROOT /usr/bin/env PATH=/usr/sbin:/usr/bin:/sbin:/bin /build_pkg.sh $pkg
 	cd $IGLUNIX_BASE
 done
 
