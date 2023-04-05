@@ -58,6 +58,7 @@ atb base/byacc
 atb base/om4
 atb bad/bad
 atb bad/gmake
+atb base/installer
 atb linux/musl
 atb linux/busybox
 atb base/toybox
@@ -122,6 +123,7 @@ efi linux/musl
 efi base/toybox
 efi base/mksh
 efi base/init
+efi base/installer
 
 # The actual kernel is not needed inside the initrd.
 mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
@@ -154,7 +156,7 @@ find . | cpio -H newc -o > $BUILD_BASE/initrd.cpio
 cd $BUILD_BASE
 
 dd if=/dev/zero of=disk.img bs=1M count=128
-mkfs.vfat disk.img
+mkfs.vfat -n 'IGLUNIX_IMG' disk.img
 mkdir -p boot-disk
 sudo mount disk.img boot-disk
 sudo cp $BUILD_BASE/initrd.cpio boot-disk/initrd
