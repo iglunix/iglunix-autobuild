@@ -163,6 +163,7 @@ sudo cp $BUILD_BASE/vmlinuz boot-disk
 sudo tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
 sudo mv boot-disk/boot/efi boot-disk/
 sudo rmdir boot-disk/boot
+sudo cp $IGLUNIX_BASE/pkgs.tar.zst boot-disk/
 sudo find boot-disk
 sudo umount boot-disk
 sync
