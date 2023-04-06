@@ -77,6 +77,7 @@ atb base/oslo
 # atb base/man-pages-posix
 atb linux/linux
 atb base/init
+atb base/zlib-ng
 atb linux/make_ext4fs
 
 to_build=$(cat $tbf)
@@ -125,6 +126,7 @@ efi base/toybox
 efi base/mksh
 efi base/init
 efi base/installer
+efi base/zlib-ng
 efi linux/make_ext4fs
 
 # The actual kernel is not needed inside the initrd.
