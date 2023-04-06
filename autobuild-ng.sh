@@ -94,6 +94,7 @@ if [ ! -d "$IGLUPKG_BASE" ]
 then
 	git clone https://github.com/iglunix/iglupkg
 fi
+git pull
 
 IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
 
@@ -103,6 +104,7 @@ then
 	git clone https://github.com/iglunix/iglunix
 fi
 cd iglunix
+git pull
 
 for pkg in $to_build; do
 	cd $pkg
