@@ -77,6 +77,7 @@ atb base/oslo
 # atb base/man-pages-posix
 atb linux/linux
 atb base/init
+atb linux/make_ext4fs
 
 to_build=$(cat $tbf)
 rm -f $tbf
@@ -124,6 +125,7 @@ efi base/toybox
 efi base/mksh
 efi base/init
 efi base/installer
+efi linux/make_ext4fs
 
 # The actual kernel is not needed inside the initrd.
 mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
