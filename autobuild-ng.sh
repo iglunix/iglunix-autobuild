@@ -79,6 +79,10 @@ atb base/zlib-ng
 # atb base/python
 atb linux/make_ext4fs
 
+# We MUST build zstd last otherwise all our
+# output packages will be zstd compressed
+atb base/zstd
+
 to_build=$(cat $tbf)
 rm -f $tbf
 
@@ -127,6 +131,7 @@ efi base/init
 efi base/installer
 efi base/zlib-ng
 efi linux/make_ext4fs
+efi base/zstd
 
 # The actual kernel is not needed inside the initrd.
 mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
