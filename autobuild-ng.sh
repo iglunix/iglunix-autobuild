@@ -67,17 +67,16 @@ atb base/samurai
 atb base/pkgconf
 atb base/perl
 atb base/openssl
-# atb base/cmake
-# atb base/curl
-# atb base/libffi
-# atb base/zlib-ng
-# atb base/python
 atb base/oslo
 # atb base/netbsd-curses
 # atb base/man-pages-posix
 atb linux/linux
 atb base/init
+atb base/cmake
+# atb base/curl
+# atb base/libffi
 atb base/zlib-ng
+# atb base/python
 atb linux/make_ext4fs
 
 to_build=$(cat $tbf)
