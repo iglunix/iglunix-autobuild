@@ -79,6 +79,7 @@ atb base/python
 atb base/compiler-rt
 atb base/libcxx
 atb base/llvm
+atb base/iglupkg
 atb linux/make_ext4fs
 atb base/netbsd-curses
 atb base/man-pages-posix
@@ -136,6 +137,7 @@ efi base/mksh
 efi base/dhcpcd
 efi base/init
 efi base/installer
+efi base/iglupkg
 efi base/zlib-ng
 efi linux/make_ext4fs
 efi base/zstd
