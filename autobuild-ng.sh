@@ -68,16 +68,19 @@ atb base/pkgconf
 atb base/perl
 atb base/openssl
 atb base/oslo
-# atb base/netbsd-curses
-# atb base/man-pages-posix
 atb linux/linux
 atb base/init
 atb base/cmake
-# atb base/curl
-# atb base/libffi
+atb base/curl
+atb base/libffi
 atb base/zlib-ng
-# atb base/python
+atb base/python
+atb base/compiler-rt
+atb base/libcxx
+atb base/llvm
 atb linux/make_ext4fs
+atb base/netbsd-curses
+atb base/man-pages-posix
 
 # We MUST build zstd last otherwise all our
 # output packages will be zstd compressed
