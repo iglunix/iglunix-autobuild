@@ -69,6 +69,7 @@ atb base/perl
 atb base/openssl
 atb base/oslo
 atb linux/linux
+atb base/dhcpcd
 atb base/init
 atb base/cmake
 atb base/curl
@@ -132,6 +133,7 @@ efi linux/busybox
 efi linux/musl
 efi base/toybox
 efi base/mksh
+efi base/dhcpcd
 efi base/init
 efi base/installer
 efi base/zlib-ng
