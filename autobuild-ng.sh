@@ -170,7 +170,7 @@ chmod +x init
 find . | cpio -H newc -o > $BUILD_BASE/initrd.cpio
 cd $BUILD_BASE
 
-dd if=/dev/zero of=disk.img bs=1M count=128
+dd if=/dev/zero of=disk.img bs=1M count=256
 mkfs.vfat -n 'IGLUNIX_IMG' disk.img
 mkdir -p boot-disk
 sudo mount disk.img boot-disk
