@@ -6,6 +6,13 @@ else
 	export ARCH=$1
 fi
 
+build_oslo=1
+
+if [ "$ARCH" -eq "riscv64" ]
+then
+	build_oslo=0
+fi
+
 if [ ! -z "$GITHUB_TOKEN" ]; then
 	while ! ./fetch_latest.sh; do
     		sleep 5
@@ -67,7 +74,12 @@ atb base/samurai
 atb base/pkgconf
 atb base/perl
 atb base/openssl
-atb base/oslo
+
+if [ ! -z "$build_oslo" ]
+then
+	atb base/oslo
+fi
+
 atb linux/linux
 atb base/dhcpcd
 atb base/init
@@ -176,12 +188,17 @@ dd if=/dev/zero of=disk.img bs=1M count=256
 mkfs.vfat -n 'IGLUNIX_IMG' disk.img
 mkdir -p boot-disk
 sudo mount disk.img boot-disk
+
 sudo cp $BUILD_BASE/initrd.cpio boot-disk/initrd
 sudo cp $BUILD_BASE/vmlinuz boot-disk
 
-sudo tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
-sudo mv boot-disk/boot/efi boot-disk/
-sudo rmdir boot-disk/boot
+if [ ! -z "$build_oslo" ]
+then
+	sudo tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
+	sudo mv boot-disk/boot/efi boot-disk/
+	sudo rmdir boot-disk/boot
+fi
+
 sudo cp $IGLUNIX_BASE/pkgs.tar.zst boot-disk/
 sudo find boot-disk
 sudo umount boot-disk
