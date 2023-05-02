@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         arch: [ x86_64 ]
-      
+
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
@@ -35,6 +35,7 @@ jobs:
 
       - name: install deps
         run: |
+          sudo apt update
           sudo apt install jq
           sudo apt install zstd
           sudo apt install qemu-user-static
@@ -66,4 +67,3 @@ jobs:
         with:
           name: boot-disk
           path: build/disk.img
-

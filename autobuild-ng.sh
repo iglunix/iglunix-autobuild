@@ -8,7 +8,7 @@ fi
 
 build_oslo=1
 
-if [ "$ARCH" -eq "riscv64" ]
+if [ "$ARCH" = "riscv64" ]
 then
 	build_oslo=0
 fi
