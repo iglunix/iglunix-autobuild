@@ -187,6 +187,21 @@ cd $BUILD_BASE
 dd if=/dev/zero of=disk.img bs=1M count=256
 mkfs.vfat -n 'IGLUNIX_IMG' disk.img
 mkdir -p boot-disk
+
+cat > boot-disk/extlinux.conf << EOF
+default iglunix
+menu title Boot Menu
+prompt 0
+timeout 50
+
+label iglunix
+	menu label Iglunix
+	linux /vmlinuz
+	initrd /initrd
+	fdtdir /dtbs
+	append console=ttyS0 console=tty1 root=LABEL=IGLU_ROOT rw
+EOF
+
 sudo mount disk.img boot-disk
 
 sudo cp $BUILD_BASE/initrd.cpio boot-disk/initrd
