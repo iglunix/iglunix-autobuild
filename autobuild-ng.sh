@@ -95,6 +95,7 @@ atb base/iglupkg
 atb linux/make_ext4fs
 atb base/netbsd-curses
 atb base/man-pages-posix
+atb base/mandoc
 
 # We MUST build zstd last otherwise all our
 # output packages will be zstd compressed
