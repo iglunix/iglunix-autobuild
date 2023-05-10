@@ -74,6 +74,7 @@ atb base/samurai
 atb base/pkgconf
 atb base/perl
 atb base/openssl
+atb base/openssh
 
 if [ ! -z "$build_oslo" ]
 then
