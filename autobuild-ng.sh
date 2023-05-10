@@ -74,7 +74,6 @@ atb base/samurai
 atb base/pkgconf
 atb base/perl
 atb base/openssl
-atb base/openssh
 
 if [ ! -z "$build_oslo" ]
 then
@@ -88,6 +87,7 @@ atb base/cmake
 atb base/curl
 atb base/libffi
 atb base/zlib-ng
+atb base/openssh
 atb base/python
 atb base/compiler-rt
 atb base/libcxx
