@@ -256,7 +256,7 @@ then
 	sudo rmdir boot-disk/boot
 fi
 
-sudo cp $IGLUNIX_BASE/pkgs.tar.zst boot-disk/
+#sudo cp $IGLUNIX_BASE/pkgs.tar.zst boot-disk/
 sudo find boot-disk
 sudo umount boot-disk
 sync
