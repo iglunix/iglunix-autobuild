@@ -178,7 +178,7 @@ zstd --ultra -22 pkgs.tar
 cd $BUILD_BASE
 
 efi() {
-	sudo iglu add $IGLUNIX_BASE/$1/out/*-*.xbps -r $BUILD_BASE/initrd -y
+	sudo $IGLU add $IGLUNIX_BASE/$1/out/*-*.xbps -r $BUILD_BASE/initrd -y
 }
 
 echo === Assembling initrd ===
