@@ -6,6 +6,13 @@ else
 	export ARCH=$1
 fi
 
+if ! command -V sudo
+then
+	sudo() {
+		doas "$@"
+	}
+fi
+
 build_oslo=1
 
 if [ "$ARCH" = "riscv64" ]
@@ -30,7 +37,10 @@ printf 'root:x:0:root\n' > ./sysroot/etc/group
 printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
 
 mkdir -p ./sysroot/usr/bin
-cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+if command -V qemu-$1-static
+then
+	cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+fi
 
 # setup chroot
 mkdir -p ./sysroot/tmp
@@ -39,6 +49,9 @@ mkdir -p ./sysroot/sys
 mkdir -p ./sysroot/proc
 mkdir -p ./sysroot/build
 
+set +e
+sudo umount ./sysroot/*
+set -e
 sudo mount --bind /tmp ./sysroot/tmp
 sudo mount --bind /dev ./sysroot/dev
 sudo mount --bind /sys ./sysroot/sys
@@ -101,6 +114,8 @@ atb base/mandoc
 # We MUST build zstd last otherwise all our
 # output packages will be zstd compressed
 atb base/zstd
+atb base/libarchive
+atb base/xbps
 
 to_build=$(cat $tbf)
 rm -f $tbf
@@ -109,6 +124,7 @@ cd build
 BUILD_BASE=$(pwd)
 
 IGLUPKG_BASE=$(pwd)/iglupkg
+sudo rm -rf "$IGLUPKG_BASE"
 if [ ! -d "$IGLUPKG_BASE" ]
 then
 	git clone https://github.com/iglunix/iglupkg
@@ -116,8 +132,10 @@ fi
 git pull
 
 IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
+IGLU=$IGLUPKG_BASE/iglu.sh
 
 IGLUNIX_BASE=$(pwd)/iglunix
+sudo rm -rf "$IGLUNIX_BASE"
 if [ ! -d "$IGLUNIX_BASE" ]
 then
 	git clone https://github.com/iglunix/iglunix
@@ -129,16 +147,22 @@ for pkg in $to_build; do
 	cd $pkg
 	$IGLUPKG f
 	sudo chroot $CHROOT /usr/bin/env PATH=/usr/sbin:/usr/bin:/sbin:/bin /build_pkg.sh $pkg
+	printf "here bitch\n"
+	set -x
+	sudo $IGLUPKG x
+	set +x
+	printf "after that bitch\n"
+	sudo $IGLU add -y -r $CHROOT out/$(basename $pkg)-*.xbps
 	cd $IGLUNIX_BASE
 done
 
-tar -cf pkgs.tar */*/out/*.*.tar
+tar -cf pkgs.tar */*/out/*-*.xbps
 zstd --ultra -22 pkgs.tar
 
 cd $BUILD_BASE
 
 efi() {
-	tar -xf $IGLUNIX_BASE/$1/out/*.*.tar -C $BUILD_BASE/initrd
+	sudo iglu add $IGLUNIX_BASE/$1/out/*-*.xbps -r $BUILD_BASE/initrd -y
 }
 
 echo === Assembling initrd ===
@@ -157,7 +181,7 @@ efi linux/make_ext4fs
 efi base/zstd
 
 # The actual kernel is not needed inside the initrd.
-mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
+sudo mv $BUILD_BASE/initrd/boot/vmlinuz $BUILD_BASE/vmlinuz
 
 cd initrd
 
@@ -169,15 +193,15 @@ exec /sbin/init
 
 EOF
 
-cat > etc/hostname << EOF
+sudo tee etc/hostname << EOF
 iglunix
 EOF
 
-cat > etc/passwd << EOF
+sudo tee etc/passwd << EOF
 root:x:0:0:Admin,,,:/root:/bin/sh
 EOF
 
-cat > etc/group << EOF
+sudo tee etc/group << EOF
 root:x:0:
 EOF
 
