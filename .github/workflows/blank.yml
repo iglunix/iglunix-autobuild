@@ -39,6 +39,8 @@ jobs:
           sudo apt install jq
           sudo apt install zstd
           sudo apt install qemu-user-static
+          sudo mkdir -p /var/lib/iglu/
+          echo "xbps stuff"
           ./xbps-for-ci.sh
 
       - name: Compile
