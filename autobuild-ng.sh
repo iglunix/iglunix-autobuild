@@ -143,6 +143,22 @@ fi
 cd iglunix
 git pull
 
+emty() {
+	../create_empty_xbps.sh
+	sudo $IGLU add -y -r $CHROOT $1-*.xbps
+}
+
+mkdir -p empty-out
+cd empty-out
+emty linux
+emty musl
+emty compiler-rt
+emty mksh
+emty busybox
+emty toybox
+emty llvm
+cd ..
+
 for pkg in $to_build; do
 	cd $pkg
 	$IGLUPKG f
