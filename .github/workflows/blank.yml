@@ -40,6 +40,8 @@ jobs:
           sudo apt install zstd
           sudo apt install qemu-user-static
 
+          curl -LO https://repo-fastly.voidlinux.org/static/xbps-static-static-0.59.1_6.x86_64-musl.tar.xz
+          sudo tar -xf xbps-static-static-0.59.1_6.x86_64-musl.tar.xz -C /
 
       - name: Compile
         env:
