@@ -251,7 +251,7 @@ sudo cp $BUILD_BASE/vmlinuz boot-disk
 
 if [ ! -z "$build_oslo" ]
 then
-	sudo tar -xf $IGLUNIX_BASE/base/oslo/out/*.*.tar -C boot-disk
+	sudo $IGLU add $IGLUNIX_BASE/base/oslo/out/*-*.xbps -r boot-disk -y
 	sudo mv boot-disk/boot/efi boot-disk/
 	sudo rmdir boot-disk/boot
 fi
