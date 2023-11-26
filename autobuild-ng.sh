@@ -193,6 +193,9 @@ efi base/init
 efi base/installer
 efi base/iglupkg
 efi base/zlib-ng
+efi base/openssl
+efi base/libarchive
+efi base/xbps
 efi linux/make_ext4fs
 efi base/zstd
 
