@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 if [ -z "$ARCH" ]
 then
 	ARCH=x86_64

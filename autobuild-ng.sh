@@ -144,7 +144,7 @@ cd iglunix
 git pull
 
 emty() {
-	$BASE/create_empty_xbps.sh
+	$BASE/create_empty_xbps.sh "$1"
 	sudo $IGLU add -y -r $CHROOT $1-*.xbps
 }
 
