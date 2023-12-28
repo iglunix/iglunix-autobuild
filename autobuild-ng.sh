@@ -1,8 +1,8 @@
 #!/bin/sh -e
 
 if [ -z "$1" ]; then
-	export ARCH=x86_64
-	XBPS_ARCH=x86_64-musl
+	export ARCH=$(uname -m)
+	XBPS_ARCH=$ARCH-musl
 else
 	export ARCH=$1
 	XBPS_ARCH=$1-musl
@@ -39,9 +39,11 @@ printf 'root:x:0:root\n' > ./sysroot/etc/group
 printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
 
 mkdir -p ./sysroot/usr/bin
-if command -V qemu-$1-static
-then
-	cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+if [ ! -z "$1" ]; then
+	if command -V qemu-$1-static
+	then
+		cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+	fi
 fi
 
 # setup chroot
