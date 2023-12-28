@@ -1,9 +1,11 @@
 #!/bin/sh -e
 
 if [ -z "$1" ]; then
-	export ARCH=x86_64
+	export ARCH=$(uname -m)
+	XBPS_ARCH=$ARCH-musl
 else
 	export ARCH=$1
+	XBPS_ARCH=$1-musl
 fi
 
 if ! command -V sudo
@@ -37,9 +39,11 @@ printf 'root:x:0:root\n' > ./sysroot/etc/group
 printf 'root:x:0:0:,,,:/root:/bin/sh' > ./sysroot/etc/passwd
 
 mkdir -p ./sysroot/usr/bin
-if command -V qemu-$1-static
-then
-	cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+if [ ! -z "$1" ]; then
+	if command -V qemu-$1-static
+	then
+		cp $(command -V qemu-$1-static | rev | cut -d' ' -f1 | rev) ./sysroot/usr/bin/
+	fi
 fi
 
 # setup chroot
@@ -129,10 +133,13 @@ if [ ! -d "$IGLUPKG_BASE" ]
 then
 	git clone https://github.com/iglunix/iglupkg
 fi
+cd iglupkg
 git pull
 
 IGLUPKG=$IGLUPKG_BASE/iglupkg.sh
 IGLU=$IGLUPKG_BASE/iglu.sh
+
+cd ..
 
 IGLUNIX_BASE=$(pwd)/iglunix
 sudo rm -rf "$IGLUNIX_BASE"
@@ -145,7 +152,7 @@ git pull
 
 emty() {
 	$BASE/create_empty_xbps.sh "$1"
-	sudo $IGLU add -y -r $CHROOT $1-*.xbps
+	sudo $IGLU add -y -a $XBPS_ARCH -r $CHROOT $1-*.xbps
 }
 
 mkdir -p empty-out
@@ -168,7 +175,7 @@ for pkg in $to_build; do
 	sudo $IGLUPKG x
 	set +x
 	printf "after that bitch\n"
-	sudo $IGLU add -y -r $CHROOT out/$(basename $pkg)-*.xbps
+	sudo $IGLU add -y -a $XBPS_ARCH -r $CHROOT out/$(basename $pkg)-*.xbps
 	cd $IGLUNIX_BASE
 done
 
@@ -178,7 +185,7 @@ zstd --ultra -22 pkgs.tar
 cd $BUILD_BASE
 
 efi() {
-	sudo $IGLU add $IGLUNIX_BASE/$1/out/*-*.xbps -r $BUILD_BASE/initrd -y
+	sudo $IGLU add -y -a $XBPS_ARCH -r $BUILD_BASE/initrd $IGLUNIX_BASE/$1/out/*-*.xbps
 }
 
 echo === Assembling initrd ===
@@ -254,7 +261,7 @@ sudo cp $BUILD_BASE/vmlinuz boot-disk
 
 if [ ! -z "$build_oslo" ]
 then
-	sudo $IGLU add $IGLUNIX_BASE/base/oslo/out/*-*.xbps -r boot-disk -y
+	sudo $IGLU add $IGLUNIX_BASE/base/oslo/out/*-*.xbps -r boot-disk -y -a $XBPS_ARCH
 	sudo mv boot-disk/boot/efi boot-disk/
 	sudo rmdir boot-disk/boot
 fi
@@ -263,3 +270,4 @@ fi
 sudo find boot-disk
 sudo umount boot-disk
 sync
+echo DONE!
